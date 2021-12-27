@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{a82cba23-9de0-45c2-b1e3-2eb1666702de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost">
+      <UniqueIdentifier>{961fad4a-a2f4-44ce-9cc7-d1d4fffec770}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\locale">
+      <UniqueIdentifier>{1179009f-b5e9-4e67-8b45-0e39e5af7830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\locale\boundary">
+      <UniqueIdentifier>{a41de1d7-27bc-491d-9f8a-f7a353873ded}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\backends\imgui_impl_win32.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\backends\imgui_impl_dx9.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="testTools.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="testJson.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="jsonTools.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="x_deprecated.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\backends\imgui_impl_win32.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\backends\imgui_impl_dx9.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="testTools.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="jsonTools.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\locale.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\collator.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\config.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\conversion.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\date_time.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\date_time_facet.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\definitions.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\encoding.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\encoding_errors.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\encoding_utf.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\format.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\formatting.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\generator.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\generic_codecvt.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\gnu_gettext.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\hold_ptr.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\info.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\localization_backend.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\message.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\time_zone.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\utf.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\utf8_codecvt.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\util.hpp">
+      <Filter>boost\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary\boundary_point.hpp">
+      <Filter>boost\locale\boundary</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary\facets.hpp">
+      <Filter>boost\locale\boundary</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary\index.hpp">
+      <Filter>boost\locale\boundary</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary\segment.hpp">
+      <Filter>boost\locale\boundary</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\boost\locale\boundary\types.hpp">
+      <Filter>boost\locale\boundary</Filter>
+    </ClInclude>
+    <ClInclude Include="imgUIsort.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.txt" />
+    <None Include="..\..\misc\debuggers\imgui.natvis">
+      <Filter>sources</Filter>
+    </None>
+    <None Include=".editorconfig" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="example_win32_directx9.rc" />
+  </ItemGroup>
+</Project>

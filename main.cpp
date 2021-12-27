@@ -1,3 +1,4 @@
+// This file is based on:
 // Dear ImGui: standalone example application for DirectX 9
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
@@ -60,38 +61,11 @@ int main(int, char**, bool* p_open)
 
     isdebug = false;
 
-    //MessageBoxA(NULL, setlocale(LC_ALL, NULL), "File Path", MB_OK);
-
-    //setlocale(LC_ALL, "russian_russia.UTF8");
-
-    //MessageBoxA(NULL, setlocale(LC_ALL, "Russian"), "LOCALE", MB_OK);
-
-    //SetConsoleOutputCP(CTRY_RUSSIA);
-    //SetConsoleCP(CTRY_RUSSIA);
-    //SetConsoleOutputCP(866);
-    //SetConsoleCP(866);
-    //setlocale(LC_ALL, "russian_russia.866");
-    //SetConsoleOutputCP(CP_UTF8);
-    //SetConsoleOutputCP(CP_UTF8);
-    //SetConsoleOutputCP(65001);
-    //SetConsoleCP(65001);
-    //std::locale foo;     // the "C" locale
-    //foo.global(std::locale("Russian"));
-    //setlocale(LC_ALL, "");
-    //std::locale::global(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t>));
-
-    /*char* locale;
-    _setmode(_fileno(stdout), _O_U16TEXT);
-    locale = setlocale(LC_ALL, "Russian");*/
-
-
     loadTranslation(fileTranslateEn, translationsList);
-    //system("chcp 1251");
-    //setlocale(LC_ALL, "Russian");
+
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
     LPWSTR name_appL = new wchar_t[strlen(name_app) + 1];
-    //MultiByteToWideChar(CP_ACP, 0, name_app, -1, name_appL, 4096);
     mbstowcs(name_appL, name_app, strlen(name_app) + 1);
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
     ::RegisterClassEx(&wc);
@@ -150,27 +124,16 @@ int main(int, char**, bool* p_open)
 
     // Our state
     bool show_demo_window = false;
-    //bool show_test_menu1 = false;
-    //const char *another_window_name = "Open loader";
-    //show_another_window = false;
+
     ImVec4 clear_color = ImVec4(0.55f, 0.55f, 0.60f, 0.90f);
 
-    
-    //std::vector<std::string> fileList;// = funcValidFilesInFolder(userPath);
-    //std::vector<std::string> fileTagsList;// = funcValidFilesInFolderTags(userPath);
 
-    //setDataArrays();
     
 
     can_update = true;
 
     setDataArraysMap();
-    //libCard NewCard(destr(namesList[0]), destr(catalogueDB[namesList[0]]["tags"]),destr(catalogueDB[namesList[0]]["path"]), funcGetInfoMap(destr(namesList[0])));
-    
-    
-    
-    //std::cout << "File 0: " << funcFilesTypeInFolder("./translation", ".json")[0] << "\n";
-    //can_update = true;
+
     int numItems = namesList.size();
    // std::cout << "List numItems = " << numItems << "\n";
 
