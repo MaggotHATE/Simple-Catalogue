@@ -52,10 +52,10 @@
     <ClCompile Include="jsonTools.cpp">
       <Filter>sources</Filter>
     </ClCompile>
-    <ClCompile Include="x_deprecated.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="ui.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="x_deprecated.cpp">
       <Filter>sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,6 +188,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="example_win32_directx9.rc" />
+    <ResourceCompile Include="Simple_catalogue.rc" />
   </ItemGroup>
 </Project>

@@ -600,4 +600,95 @@ void popPath(char buffName[64], char* buffVal, char* filename) {
 }
 
 
+
+
+wchar_t* WINAPI winOpenFlw()
+{
+    wchar_t* winOpenResult = L"NULL";
+    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
+        COINIT_DISABLE_OLE1DDE);
+    if (SUCCEEDED(hr))
+    {
+        IFileOpenDialog* pFileOpen;
+
+        // Create the FileOpenDialog object.
+        hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
+            IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
+
+        if (SUCCEEDED(hr))
+        {
+            // Show the Open dialog box.
+            hr = pFileOpen->Show(NULL);
+
+            // Get the file name from the dialog box.
+            if (SUCCEEDED(hr))
+            {
+                IShellItem* pItem;
+                hr = pFileOpen->GetResult(&pItem);
+                if (SUCCEEDED(hr))
+                {
+                    wchar_t* pszFilePath;
+
+
+                    //hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+                    hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+                    // Display the file name to the user.
+                    if (SUCCEEDED(hr))
+                    {
+                        //std::wcout << "PATH1 = " << pszFilePath << "\n";
+                        //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
+                        //fs::path(pszFilePath);
+
+                        winOpenResult = pszFilePath;
+                        //std::fstream fs;
+                        //fs.open(buffer, std::fstream::in | std::fstream::out | std::fstream::app);
+                        //Json::Value root;
+                        //fs >> root;
+                        //winOpenResult = strdup(root["testread1"]["warrior1"][0].asCString());
+                        //CoTaskMemFree(pszFilePath);
+                    }
+                    pItem->Release();
+                }
+            }
+            pFileOpen->Release();
+        }
+        CoUninitialize();
+    }
+    MessageBoxW(NULL, winOpenResult, L"File Path", MB_OK);
+
+    return winOpenResult;
+}
+
+/////////////////////////////////////////////////////////////////// old Win32 windows functionality, doesn't work
+
+void funcOpenWinapi() {
+    OPENFILENAME ofn = { 0 };
+    TCHAR szFile[260] = { 0 };
+    HWND hwnd;              // owner window
+    HANDLE hf;              // file handle
+
+    // Initialize remaining fields of OPENFILENAME structure
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = hwnd;
+    ofn.lpstrFile = szFile;
+    ofn.nMaxFile = sizeof(szFile);
+    ofn.lpstrFilter = _T("All\0*.*\0Text\0*.TXT\0");
+    ofn.nFilterIndex = 1;
+    ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
+    ofn.lpstrInitialDir = NULL;
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+    if (GetOpenFileName(&ofn) == TRUE)
+        hf = CreateFile(ofn.lpstrFile,
+            GENERIC_READ,
+            0,
+            (LPSECURITY_ATTRIBUTES)NULL,
+            OPEN_EXISTING,
+            FILE_ATTRIBUTE_NORMAL,
+            (HANDLE)NULL);
+}
+
+
 }*/

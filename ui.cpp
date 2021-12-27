@@ -217,6 +217,9 @@ char* getPathUser() {
     return result;
 }
 
+/////////////////////////////////////////////////////////////////// UI: popup windows
+
+
 
 void popElementEditSimple(std::vector<libCard>& libCards, char* filename) {
 
@@ -312,6 +315,155 @@ void popElementEditDouble(std::vector<libCard>& libCards, char* filename) {
 }
 
 
+void popCreate() {
+    char* myPath = getPathUser();
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+    if (ImGui::BeginPopupModal(button_create, NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+
+        ImGui::Separator();
+
+        ImGui::Text(create_name);
+        ImGui::InputText(table_name, fileNameNewBuff, 64);
+
+
+        ImGui::TextWrapped(newItemInfoBuffer[0]);
+
+        ImGui::TextWrapped(create_tags);
+        ImGui::InputText(table_tags, fileTagsNewBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
+        ImGui::TextWrapped(create_info);
+        ImGui::InputText(" ", fileInfo1nNewBuff, 64);
+        ImGui::SameLine();
+        ImGui::InputText("  ", fileInfo1vNewBuff, 64);
+        ImGui::InputText("   ", fileInfo2nNewBuff, 64);
+        ImGui::SameLine();
+        ImGui::InputText("    ", fileInfo2vNewBuff, 64);
+        if (ImGui::Button(create_path, ImVec2(120, 0))) {
+            buffVal = winOpenFl();
+            can_update == true;
+        }
+        ImGui::TextWrapped(table_path);
+        ImGui::SameLine();
+        ImGui::TextWrapped(buffVal);
+
+
+
+        if (ImGui::Button(popOK, ImVec2(120, 0))) {
+
+            copyChars2(testName1, fileNameNewBuff);
+            newItemInfoBuffer[0] = fileNameNewBuff;
+            newItemInfoBuffer[1] = fileTagsNewBuff;
+            newItemInfoBuffer[2] = fileInfo1nNewBuff;
+            newItemInfoBuffer[3] = fileInfo1vNewBuff;
+            newItemInfoBuffer[4] = fileInfo2nNewBuff;
+            newItemInfoBuffer[5] = fileInfo2vNewBuff;
+            newItemInfoBuffer[6] = buffVal;
+            char nameJson[64] = "userdata/";
+            std::cout << nameJson << "\n";
+            strcat(nameJson, newItemInfoBuffer[0]);
+            std::cout << nameJson << "\n";
+            strcat(nameJson, ".json");
+            std::cout << nameJson << "\n";
+            if (exist(nameJson) == 0) {
+                funcWriteJson(newItemInfoBuffer, nameJson);
+
+                openFileFolder(myPath);
+            }
+            else {
+
+            }
+            memset(&(fileNameNewBuff[0]), 0, 64);
+            memset(&(fileTagsNewBuff[0]), 0, 64);
+            memset(&(fileInfo1nNewBuff[0]), 0, 64);
+            memset(&(fileInfo1vNewBuff[0]), 0, 64);
+            memset(&(fileInfo2nNewBuff[0]), 0, 64);
+            memset(&(fileInfo2vNewBuff[0]), 0, 64);
+            ImGui::CloseCurrentPopup();
+            clearBuffers();
+        }
+        ImGui::SetItemDefaultFocus();
+        ImGui::SameLine();
+        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::EndPopup();
+    }
+
+}
+
+void popSearch(std::vector<libCard> libCards) {
+    char* myPath = getPathUser();
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    ImGuiIO io = ImGui::GetIO();
+    ImGui::SetNextWindowSize({ 2 * io.DisplaySize.x / 3, 2 * io.DisplaySize.y / 3 });
+
+    if (ImGui::BeginPopupModal(button_search, NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+
+        ImGui::Separator();
+
+
+        ImGui::Text(destr(nameSearch));
+        ImGui::InputText(table_name, searchBuffName, 64, ImGuiInputTextFlags_CharsNoBlank);
+
+        ImGui::Text(destr(tagsSearch));
+        ImGui::InputText(table_tags, searchBuffTags, 64, ImGuiInputTextFlags_CharsNoBlank);
+
+        ImGui::Text(destr(pathSearch));
+        ImGui::InputText(table_path, searchBuffPath, 64, ImGuiInputTextFlags_CharsNoBlank);
+
+        ImGui::Text(destr(infoSearch));
+        ImGui::InputText(search_key, searchBuffInfoKey, 64, ImGuiInputTextFlags_CharsNoBlank);
+        ImGui::SameLine();
+        ImGui::InputText(search_val, searchBuffInfoVal, 64, ImGuiInputTextFlags_CharsNoBlank);
+
+
+
+
+        if (ImGui::Button(popOK, ImVec2(120, 0))) {
+
+            searchCards.clear();
+            char* Sname = "--";
+            if (searchBuffName != "" && searchBuffName[0] != '\0') Sname = searchBuffName;
+            char* Stags = "--";
+            if (searchBuffTags != "" && searchBuffTags[0] != '\0') Stags = searchBuffTags;
+            char* Spath = "--";
+            if (searchBuffPath != "" && searchBuffPath[0] != '\0') Spath = searchBuffPath;
+
+            char* SinfoKey = "--";
+            if (searchBuffInfoKey != "" && searchBuffInfoKey[0] != '\0') SinfoKey = searchBuffInfoKey;
+            char* Sinfoval = "--";
+            if (searchBuffInfoVal != "" && searchBuffInfoVal[0] != '\0') Sinfoval = searchBuffInfoVal;
+
+            if (searchCards.empty()) {
+                for (int n = 0; n < libCards.size(); n++)
+                {
+                    if (libCards[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(libCards[n]);
+                }
+                setDataArraysItems(searchCards, searchItems);
+            }
+
+
+        }
+        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+
+        if (!searchCards.empty()) {
+            setTableClipItm(searchCards, searchItems);
+        }
+
+        ImGui::SetItemDefaultFocus();
+        ImGui::SameLine();
+
+        ImGui::EndPopup();
+    }
+
+}
+
+/////////////////////////////////////////////////////////////////// UI: context menus (tags and info use popups to keep editing popups working)
+/////////////////////////////////////////////////////////////////// needs more work
 
 void editPathContext(std::vector<libCard>& libCards, int row_n) {
     if (ImGui::BeginPopup(items[row_n].Name))
@@ -450,6 +602,8 @@ void editInfoContext(std::vector<libCard>& libCards) {
     popElementEditDouble(libCards, editName);
 }
 
+/////////////////////////////////////////////////////////////////// UI: tables
+
 void setTableClip(std::vector<libCard>& libCards) {
 
 
@@ -560,6 +714,7 @@ void setTableClip(std::vector<libCard>& libCards) {
     }
 }
 
+/////////////////////////////////////////////////////////////////// this is used for search only, bad code duplication, needs more work
 
 void setTableClipItm(std::vector<libCard>& libCards, ImVector<MyItem> items) {
 
@@ -681,153 +836,7 @@ void setTableClipItm(std::vector<libCard>& libCards, ImVector<MyItem> items) {
     }
 }
 
-
-void popCreate() {
-    char* myPath = getPathUser();
-
-    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-
-    if (ImGui::BeginPopupModal(button_create, NULL, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-
-        ImGui::Separator();
-
-        ImGui::Text(create_name);
-        ImGui::InputText(table_name, fileNameNewBuff, 64);
-
-
-        ImGui::TextWrapped(newItemInfoBuffer[0]);
-
-        ImGui::TextWrapped(create_tags);
-        ImGui::InputText(table_tags, fileTagsNewBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
-        ImGui::TextWrapped(create_info);
-        ImGui::InputText("1", fileInfo1nNewBuff, 64);
-        ImGui::SameLine();
-        ImGui::InputText("11", fileInfo1vNewBuff, 64);
-        ImGui::InputText("2", fileInfo2nNewBuff, 64);
-        ImGui::SameLine();
-        ImGui::InputText("22", fileInfo2vNewBuff, 64);
-        if (ImGui::Button(create_path, ImVec2(120, 0))) {
-            buffVal = winOpenFl();
-            can_update == true;
-        }
-        ImGui::TextWrapped(table_path);
-        ImGui::SameLine();
-        ImGui::TextWrapped(buffVal);
-
-
-
-        if (ImGui::Button(popOK, ImVec2(120, 0))) {
-
-            copyChars2(testName1, fileNameNewBuff);
-            newItemInfoBuffer[0] = fileNameNewBuff;
-            newItemInfoBuffer[1] = fileTagsNewBuff;
-            newItemInfoBuffer[2] = fileInfo1nNewBuff;
-            newItemInfoBuffer[3] = fileInfo1vNewBuff;
-            newItemInfoBuffer[4] = fileInfo2nNewBuff;
-            newItemInfoBuffer[5] = fileInfo2vNewBuff;
-            newItemInfoBuffer[6] = buffVal;
-            char nameJson[64] = "userdata/";
-            std::cout << nameJson << "\n";
-            strcat(nameJson, newItemInfoBuffer[0]);
-            std::cout << nameJson << "\n";
-            strcat(nameJson, ".json");
-            std::cout << nameJson << "\n";
-            if (exist(nameJson) == 0) {
-                funcWriteJson(newItemInfoBuffer, nameJson);
-
-                openFileFolder(myPath);
-            }
-            else {
-
-            }
-            memset(&(fileNameNewBuff[0]), 0, 64);
-            memset(&(fileTagsNewBuff[0]), 0, 64);
-            memset(&(fileInfo1nNewBuff[0]), 0, 64);
-            memset(&(fileInfo1vNewBuff[0]), 0, 64);
-            memset(&(fileInfo2nNewBuff[0]), 0, 64);
-            memset(&(fileInfo2vNewBuff[0]), 0, 64);
-            ImGui::CloseCurrentPopup();
-            clearBuffers();
-        }
-        ImGui::SetItemDefaultFocus();
-        ImGui::SameLine();
-        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-        ImGui::EndPopup();
-    }
-
-}
-
-void popSearch(std::vector<libCard> libCards) {
-    char* myPath = getPathUser();
-
-    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    ImGuiIO io = ImGui::GetIO();
-    ImGui::SetNextWindowSize({ 2 * io.DisplaySize.x/3, 2 * io.DisplaySize.y/3 });
-
-    if (ImGui::BeginPopupModal(button_search, NULL, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-
-        ImGui::Separator();
-
-
-        ImGui::Text(destr(nameSearch));
-        ImGui::InputText(table_name, searchBuffName, 64, ImGuiInputTextFlags_CharsNoBlank);
-
-        ImGui::Text(destr(tagsSearch));
-        ImGui::InputText(table_tags, searchBuffTags, 64, ImGuiInputTextFlags_CharsNoBlank);
-
-        ImGui::Text(destr(pathSearch));
-        ImGui::InputText(table_path, searchBuffPath, 64, ImGuiInputTextFlags_CharsNoBlank);
-
-        ImGui::Text(destr(infoSearch));
-        ImGui::InputText(search_key, searchBuffInfoKey, 64, ImGuiInputTextFlags_CharsNoBlank);
-        ImGui::SameLine();
-        ImGui::InputText(search_val, searchBuffInfoVal, 64, ImGuiInputTextFlags_CharsNoBlank);
-
-
-        
-
-        if (ImGui::Button(popOK, ImVec2(120, 0))) {
-
-            searchCards.clear();
-            char* Sname = "--";
-            if (searchBuffName != "" && searchBuffName[0] != '\0') Sname = searchBuffName;
-            char* Stags = "--";
-            if (searchBuffTags != "" && searchBuffTags[0] != '\0') Stags = searchBuffTags;
-            char* Spath = "--";
-            if (searchBuffPath != "" && searchBuffPath[0] != '\0') Spath = searchBuffPath;
-
-            char* SinfoKey = "--";
-            if (searchBuffInfoKey != "" && searchBuffInfoKey[0] != '\0') SinfoKey = searchBuffInfoKey;
-            char* Sinfoval = "--";
-            if (searchBuffInfoVal != "" && searchBuffInfoVal[0] != '\0') Sinfoval = searchBuffInfoVal;
-            
-            if (searchCards.empty()) {
-                for (int n = 0; n < libCards.size(); n++)
-                {
-                    if (libCards[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(libCards[n]);
-                }
-                setDataArraysItems(searchCards, searchItems);
-            }
-
-            
-        }
-        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-
-        if (!searchCards.empty() ) {
-            setTableClipItm(searchCards, searchItems);
-        }
-
-        ImGui::SetItemDefaultFocus();
-        ImGui::SameLine();
-        
-        ImGui::EndPopup();
-    }
-
-}
+/////////////////////////////////////////////////////////////////// DB: database setups and updates
 
 void setDataArrays(std::vector<libCard>& libCards)
 {

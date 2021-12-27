@@ -389,79 +389,6 @@ int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards)
     return status;
 }
 
-char* WINAPI winOpenFl()
-{
-    char* winOpenResult = "./userdata/";
-    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
-        COINIT_DISABLE_OLE1DDE);
-    if (SUCCEEDED(hr))
-    {
-        IFileOpenDialog* pFileOpen;
-
-        // Create the FileOpenDialog object.
-        hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
-            IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
-
-        if (SUCCEEDED(hr))
-        {
-            // Show the Open dialog box.
-            hr = pFileOpen->Show(NULL);
-
-            // Get the file name from the dialog box.
-            if (SUCCEEDED(hr))
-            {
-                IShellItem* pItem;
-                hr = pFileOpen->GetResult(&pItem);
-                if (SUCCEEDED(hr))
-                {
-                    LPWSTR pszFilePath;
-                    hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
-
-                    // Display the file name to the user.
-                    if (SUCCEEDED(hr))
-                    {
-                        //std::wcout << "PATH = " << pszFilePath << "\n";
-                        //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
-                        size_t i;
-                        char* buffer;
-                        //wcstombs(buffer, pszFilePath, 500);
-                        //WideCharToMultiByte(CP_OEMCP,
-                        //    0,
-                        //    pszFilePath,
-                        //    -1,
-                        //    buffer,
-                        //    0, NULL, NULL);
-                        //CharToOem(pszFilePath, buffer);
-                        //WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, pszFilePath, -1, buffer, wcslen(pszFilePath), NULL, NULL);
-                        //_wcstombs_l(buffer, pszFilePath, 500, _create_locale(LC_ALL, "ru_RU.UTF8"));
-                        //WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, pszFilePath, -1, buffer, 500, NULL, NULL);
-                        
-
-                        //wsprintfA(buffer, "%S", pszFilePath);
-                        std::wcout << "PATH = " << buffer << "\n";
-                        //AnsiToOem(buffer, buffer);
-
-                        winOpenResult = buffer;
-
-
-                        //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
-                        /*std::fstream fs;
-                        fs.open(buffer, std::fstream::in | std::fstream::out | std::fstream::app);
-                        Json::Value root;
-                        fs >> root;
-                        winOpenResult = strdup(root["testread1"]["warrior1"][0].asCString());
-                        CoTaskMemFree(pszFilePath);*/
-                    }
-                    pItem->Release();
-                }
-            }
-            pFileOpen->Release();
-        }
-        CoUninitialize();
-    }
-
-    return winOpenResult;
-}
 
 char* WINAPI winOpenAndProcessFl(char* filename)
 {
@@ -558,9 +485,9 @@ char* WINAPI winOpenAndProcessFl(char* filename)
     return buffer1;
 }
 
-wchar_t* WINAPI winOpenFlw()
+char* WINAPI winOpenFl()
 {
-    wchar_t* winOpenResult = L"NULL";
+    char* winOpenResult = "./userdata/";
     HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
         COINIT_DISABLE_OLE1DDE);
     if (SUCCEEDED(hr))
@@ -583,26 +510,44 @@ wchar_t* WINAPI winOpenFlw()
                 hr = pFileOpen->GetResult(&pItem);
                 if (SUCCEEDED(hr))
                 {
-                    wchar_t* pszFilePath;
-
-
-                    //hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+                    LPWSTR pszFilePath;
                     hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
 
                     // Display the file name to the user.
                     if (SUCCEEDED(hr))
                     {
-                        //std::wcout << "PATH1 = " << pszFilePath << "\n";
+                        //std::wcout << "PATH = " << pszFilePath << "\n";
                         //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
-                        //fs::path(pszFilePath);
+                        size_t i;
+                        char* buffer;
+                        //wcstombs(buffer, pszFilePath, 500);
+                        //WideCharToMultiByte(CP_OEMCP,
+                        //    0,
+                        //    pszFilePath,
+                        //    -1,
+                        //    buffer,
+                        //    0, NULL, NULL);
+                        //CharToOem(pszFilePath, buffer);
+                        //WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, pszFilePath, -1, buffer, wcslen(pszFilePath), NULL, NULL);
+                        //_wcstombs_l(buffer, pszFilePath, 500, _create_locale(LC_ALL, "ru_RU.UTF8"));
+                        //WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, pszFilePath, -1, buffer, 500, NULL, NULL);
 
-                        winOpenResult = pszFilePath;
-                        /*std::fstream fs;
-                        fs.open(buffer, std::fstream::in | std::fstream::out | std::fstream::app);
-                        Json::Value root;
-                        fs >> root;
-                        winOpenResult = strdup(root["testread1"]["warrior1"][0].asCString());
-                        CoTaskMemFree(pszFilePath);*/
+
+                        //wsprintfA(buffer, "%S", pszFilePath);
+                        //std::wcout << "PATH = " << buffer << "\n";
+                        //AnsiToOem(buffer, buffer);
+                        //buffer1 =
+                        wsprintfA(buffer, "%S", pszFilePath);
+                        winOpenResult = destr(stringConvert(buffer, CP_THREAD_ACP, 0, CP_UTF8, 0));
+
+
+                        //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
+                        //std::fstream fs;
+                        //fs.open(buffer, std::fstream::in | std::fstream::out | std::fstream::app);
+                        //Json::Value root;
+                        //fs >> root;
+                        //winOpenResult = strdup(root["testread1"]["warrior1"][0].asCString());
+                        //CoTaskMemFree(pszFilePath);
                     }
                     pItem->Release();
                 }
@@ -611,35 +556,6 @@ wchar_t* WINAPI winOpenFlw()
         }
         CoUninitialize();
     }
-    MessageBoxW(NULL, winOpenResult, L"File Path", MB_OK);
 
     return winOpenResult;
-}
-
-void funcOpenWinapi() {
-    OPENFILENAME ofn = { 0 };
-    TCHAR szFile[260] = { 0 };
-    HWND hwnd;              // owner window
-    HANDLE hf;              // file handle
-
-    // Initialize remaining fields of OPENFILENAME structure
-    ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = hwnd;
-    ofn.lpstrFile = szFile;
-    ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = _T("All\0*.*\0Text\0*.TXT\0");
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFileTitle = NULL;
-    ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = NULL;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-
-    if (GetOpenFileName(&ofn) == TRUE)
-        hf = CreateFile(ofn.lpstrFile,
-            GENERIC_READ,
-            0,
-            (LPSECURITY_ATTRIBUTES)NULL,
-            OPEN_EXISTING,
-            FILE_ATTRIBUTE_NORMAL,
-            (HANDLE)NULL);
 }

@@ -8,7 +8,7 @@
 
 
 char* WINAPI winOpenFl();
-wchar_t* WINAPI winOpenFlw();
+//wchar_t* WINAPI winOpenFlw();
 char* WINAPI winOpenAndProcessFl(char* filename);
 char* getPathExe();
 void openFileFolder(char* path);
@@ -29,6 +29,6 @@ std::string fileNameFull(std::string filename);
 int funcValidFilesProcess(std::string path, std::vector<std::string>& names, std::vector<std::string>& tags, std::vector<std::string>& info, std::vector<std::string>& paths);
 int funcValidFilesProcessMaps(std::string path, std::vector<std::string>& names, std::map<std::string, std::map<std::string, std::string>>& tagsANDinfo);
 int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards);
-void funcOpenWinapi();
+//void funcOpenWinapi();
 
 
