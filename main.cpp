@@ -3,21 +3,15 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
-#include <d3d9.h>
-#include <tchar.h>
-#include <string>
-//#include "imgUIsort.h"
-//#include "jsonTools.h"
 
 
 ////////// SEPARATE HEADER FOR DECLARATIONS
 #include "main.h"
 #include "ui.h"
-//#include "ui.cpp"
+
+#include <fstream>
+#include <iostream> 
+
 
 
 // Data
@@ -291,7 +285,7 @@ void setDataArraysMap()
     //setDataArrays(libCards);
     Cards = setDataArrays1();
 
-    //std::cout << __FUNCTION__ << ": " << Cards.getAView(0).Name << "\n";
+    //std::cout << __FUNCTION__ << ": " << Cards.getView()[0].Name << "\n";
     std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
     //setDataArraysItems(libCards);
     can_update = false;

@@ -1,10 +1,7 @@
 #pragma once
 #include <windows.h>
-#include <shobjidl.h>
-#include <shellapi.h>
-#include <iostream>
-#include <filesystem>
 #include "jsonTools.h"
+#include "libCard.h"
 
 
 char* WINAPI winOpenFl();

@@ -154,6 +154,8 @@
     <ClCompile Include="..\..\imgui_widgets.cpp" />
     <ClCompile Include="..\..\backends\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\..\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="libCard.cpp" />
+    <ClCompile Include="libCardAssembly.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="x_deprecated.cpp" />
     <ClCompile Include="jsonTools.cpp" />
@@ -198,9 +200,12 @@
     <ClInclude Include="Include\boost\locale\utf8_codecvt.hpp" />
     <ClInclude Include="Include\boost\locale\util.hpp" />
     <ClInclude Include="jsonTools.h" />
+    <ClInclude Include="libCard.h" />
+    <ClInclude Include="libCardAssembly.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="testTools.h" />
+    <ClInclude Include="translateDB.h" />
     <ClInclude Include="ui.h" />
   </ItemGroup>
   <ItemGroup>

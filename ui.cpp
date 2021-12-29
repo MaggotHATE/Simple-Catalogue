@@ -1,28 +1,7 @@
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
-#include <d3d9.h>
-#include <tchar.h>
-#include <string>
-#include <json/json.h>
-#include <json/reader.h>
-#include <json/value.h>
+
 #include <fstream>
-#include <iostream> 
-#include <cstring>
-#include <cstdlib>
-#include <sys/stat.h>
-#include <io.h>
-#include <fcntl.h>
-#include <array>
-#include "testTools.h"
-#include "jsonTools.h"
-#include "imgUIsort.h"
-#include <windows.h>
-#include <codecvt>
-#include <locale>
-#include "imgUIsort.h"
+#include <iostream>
+
 
 #include "ui.h"
 

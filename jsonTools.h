@@ -1,96 +1,19 @@
 #pragma once
+#include <Windows.h>
 #include <tchar.h>
 #include <string>
 #include <json/json.h>
 #include <json/reader.h>
 #include <json/value.h>
-#include <fstream>
-#include <iostream> 
-#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <locale>
+#include <shobjidl.h>
+#include <codecvt>
 #include "imgUIsort.h"
 
 
 extern bool isdebug;
-
-class libCard {
-public:
-    libCard(char* name_C, char* tags_C, char* path_C, std::map<char*, char*> info_C);
-
-    char* getName();
-    char* getTags();
-    char* getPath();
-    bool setName(char* name);
-    bool setTags(char* tags);
-    bool setPath(char* path);
-    std::map<char*, char*> getInfo();
-    bool setInfo(std::map<char*, char*> info);
-    int getFind(char* name = "--", char* tags = "--", char* path = "--", char* infoKey = "--", char* infoVal = "--");
-    bool empty();
-
-private:
-    char* name_;
-    char* tags_;
-    char* path_;
-    std::map<char*, char*> info_;
-};
-
-
-
-class libCardAssembly {
-public:
-    //libCardAssembly(std::vector<libCard> assemblyOf_I);
-    void libCardAssembly::setUp(std::vector<libCard> assemblyOf_I);
-    ImVector<MyItem> getView();
-    std::vector<libCard> getCards();
-    libCard getACard(int idx);
-    MyItem getAView(int idx);
-    void clearC();
-    void clearV();
-    std::vector<libCard> _assemblyOf;
-    ImVector<MyItem> _assemblyView;
-
-//private:
-//    std::vector<libCard> _assemblyOf;
-//    ImVector<MyItem> _assemblyView;
-
-};
-
-class translateDB {
-public:
-    char* name_app;
-    char* intro;
-    char* button_create;
-    char* button_search;
-    char* search_key;
-    char* search_val;
-    std::string nameSearch;
-    std::string tagsSearch;
-    std::string pathSearch;
-    std::string infoSearch;
-    char* check_catalogue;
-    char* table_name;
-    char* table_tags;
-    char* table_info;
-    char* table_path;
-    char* create_name;
-    char* create_tags;
-    char* create_info;
-    char* create_path;
-    char* refresh;
-    char* edit;
-    char* editTags;
-    char* editInfo;
-    char* info;
-    char* add_path;
-    char* open_num;
-    char* open_folder_num;
-    char* edit_path_num;
-    char* toolTip;
-    char* popOK;
-    char* popBACK;
-    int item_current = 0;
-};
-
 
 char* wchar_to_char(const wchar_t* pwchar);
 char* wide_to_char1(const WCHAR* source);
