@@ -1,0 +1,17 @@
+{
+	"book2" : 
+	{
+		"info" : 
+		{
+			"genre" : "sci-fi"
+		},
+		"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\packages.config",
+		"tags" : 
+		[
+			"book",
+			"big",
+			"classic"
+		]
+	},
+	"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\packages.config"
+}

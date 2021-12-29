@@ -1,0 +1,18 @@
+{
+	"book4" : 
+	{
+		"info" : 
+		{
+			"author" : "who",
+			"genre" : "bad"
+		},
+		"path" : "S:\\imgui-master\\examples\\README.txt",
+		"tags" : 
+		[
+			"book",
+			"big",
+			"boobs"
+		]
+	},
+	"path" : "test"
+}

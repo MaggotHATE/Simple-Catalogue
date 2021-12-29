@@ -1,0 +1,17 @@
+{
+	"info1" : 
+	{
+		"info" : 
+		{
+			"info4" : "info5",
+			"info6" : "info7"
+		},
+		"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\resource.h",
+		"tags" : 
+		[
+			"info2",
+			"info3"
+		]
+	},
+	"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\resource.h"
+}
