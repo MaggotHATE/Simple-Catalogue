@@ -3,12 +3,16 @@
 #include "jsonTools.h"
 #include "libCard.h"
 
+#include <string>
+#include <vector>
+#include <map>
+
 
 char* WINAPI winOpenFl();
 //wchar_t* WINAPI winOpenFlw();
 char* WINAPI winOpenAndProcessFl(char* filename);
-char* getPathExe();
-void openFileFolder(char* path);
+std::string getPathExe();
+void openFileFolder(const std::string& path);
 void openFile1(char* path);
 void openFile1W(wchar_t* path);
 void openFileFolderW(wchar_t* path);

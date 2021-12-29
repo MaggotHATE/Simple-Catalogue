@@ -41,7 +41,7 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n);
 void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
 
 char* getPathOnly();
-char* getPathUser();
+std::string getPathUser();
 
 bool popCreate();
 void popSearch(libCardAssembly Cards);

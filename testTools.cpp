@@ -11,12 +11,15 @@
 #include <wchar.h>
 
 
+
 namespace fs = std::experimental::filesystem;
 
-char* getPathExe() {
+std::string getPathExe() 
+{
     char myPath[_MAX_PATH + 1];
     GetModuleFileNameA(NULL, myPath, _MAX_PATH);
-    return myPath;
+
+    return std::string(myPath);
 }
 
 void copyChars(char copy[64], char paste[64]) {
@@ -47,14 +50,14 @@ wchar_t* convStr2W(std::string& pathT) {
 }
 
 
-void openFileFolder(char* path)
+void openFileFolder(const std::string&  path)
 {
     std::cout << __FUNCTION__ << " < " << path << "\n";
     //char complPath[256] = "";
     //strcat(complPath, path);
     //strcat(complPath, "userdata/");
     //std::cout << "complPath = " << complPath << "\n";
-    ShellExecuteA(NULL, "open", path, NULL, NULL, SW_SHOWDEFAULT);
+    ShellExecuteA(NULL, "open", path.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 }
 
 void openFileFolderW(wchar_t* path)
@@ -424,7 +427,7 @@ char* WINAPI winOpenAndProcessFl(char* filename)
                         //std::wcout << "PATH = " << pszFilePath << "\n";
                         //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
                         size_t i;
-                        char* buffer;
+                        char* buffer = NULL;
                         //wcstombs(buffer, pszFilePath, 500);
                         //WideCharToMultiByte(CP_OEMCP,
                         //    0,
@@ -518,7 +521,7 @@ char* WINAPI winOpenFl()
                         //std::wcout << "PATH = " << pszFilePath << "\n";
                         //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
                         size_t i;
-                        char* buffer;
+                        char* buffer = NULL;
                         //wcstombs(buffer, pszFilePath, 500);
                         //WideCharToMultiByte(CP_OEMCP,
                         //    0,
