@@ -623,8 +623,8 @@ void editInfoContext(libCardAssembly& Cards, int row_n) {
 
 void setTableClip(libCardAssembly& Cards) {
 
-    std::vector<libCard> libCards = Cards._assemblyOf;
-    ImVector<MyItem> items = Cards._assemblyView;
+    //std::vector<libCard>& libCards = Cards._assemblyOf;
+    ImVector<MyItem>& items = Cards._assemblyView;
     // Create item list
 
     const float TEXT_BASE_HEIGHT = ImGui::GetTextLineHeightWithSpacing();
@@ -673,11 +673,11 @@ void setTableClip(libCardAssembly& Cards) {
             for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
             {
 
-
-                ImGui::PushID(items[row_n].ID);
+                int ID = items[row_n].ID;
+                ImGui::PushID(ID);
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
-                ImGui::Text("%04d", items[row_n].ID);
+                ImGui::Text("%04d", ID);
                 ImGui::TableNextColumn();
 
                 if (ImGui::Button(funcGetIdxName(items[row_n].Name, 0))) openFile1(items[row_n].Name);
@@ -685,41 +685,28 @@ void setTableClip(libCardAssembly& Cards) {
 
                 ImGui::Text(items[row_n].Tags);
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
-
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    //row_x = items[row_n].ID;
-                    //if (isdebug == true) std::cout << items[row_n].ID << " : " << row_x << "\n";
-                    ImGui::OpenPopupContextItem(items[row_n].Tags);
-                } 
-
-                editTagsContext(Cards, row_n);
+                    ImGui::OpenPopupContextItem(items[ID].Tags);
+                }
+                editTagsContext(Cards, ID);
 
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items[row_n].Info);
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
-
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    //row_x = items[row_n].ID;
-                    //if (isdebug == true) std::cout << row_x << " : " << row_n << "\n";
-                    ImGui::OpenPopupContextItem(items[row_n].Info);
-                }
-
-                
-                editInfoContext(Cards, row_n);
+                    ImGui::OpenPopupContextItem(items[ID].Info);
+                }              
+                editInfoContext(Cards, ID);
 
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items[row_n].Path);
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
-
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    //row_x = items[row_n].ID;
-                    //if (isdebug == true) std::cout << row_x << " : " << row_n << "\n";
-                    ImGui::OpenPopupContextItem(items[row_n].Name);
+                    ImGui::OpenPopupContextItem(items[ID].Name);
                 }
-
-                editPathContext(Cards, row_n);
+                editPathContext(Cards, ID);
 
 
                 ImGui::PopID();
