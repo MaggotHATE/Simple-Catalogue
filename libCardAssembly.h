@@ -2,21 +2,28 @@
 
 #include "libCard.h"
 
-class libCardAssembly {
+class libCardAssembly 
+{
 public:
-    //libCardAssembly(std::vector<libCard> assemblyOf_I);
-    void setUp(std::vector<libCard> assemblyOf_I);
-    ImVector<MyItem> getView();
+	//Absence of default constructor is equal to:
+	libCardAssembly() = default;
+    libCardAssembly(std::vector<libCard>& assemblyOf_I);
+	
+
+    ImVector<my_item::MyItem>& getView();
     std::vector<libCard> getCards();
     libCard getACard(int idx);
-    MyItem getAView(int idx);
+    my_item::MyItem getAView(int idx);
     void clearC();
     void clearV();
-    std::vector<libCard> _assemblyOf;
-    ImVector<MyItem> _assemblyView;
-
-    //private:
-    //    std::vector<libCard> _assemblyOf;
-    //    ImVector<MyItem> _assemblyView;
-
+    //*
+	std::vector<libCard> _assemblyOf;
+    ImVector<my_item::MyItem> _assemblyView;
+	//*/
+    private:
+		void setUp(std::vector<libCard>& assemblyOf_I);
+        /*
+		std::vector<libCard> _assemblyOf;
+        ImVector<my_item::MyItem> _assemblyView;
+		//*/
 };

@@ -5,6 +5,7 @@
 
 #include "ui.h"
 
+using namespace my_item;
 //ImVector<MyItem> items;
 char* PROGRAM_NAME = _pgmptr;
 
@@ -861,13 +862,9 @@ void setTableClipItm(std::vector<libCard> libCards, ImVector<MyItem>& items) {
 
 libCardAssembly setDataArrays1()
 {
-    libCardAssembly Cards;
-
     std::vector<libCard> libCardsTemp;
-
     funcValidFilesProcessClass(getPathUser(), libCardsTemp);
-
-    Cards.setUp(libCardsTemp);
+	libCardAssembly Cards = libCardAssembly(libCardsTemp);
 
     std::cout << Cards._assemblyOf[0].getFind("--", "seri", "--", "--", "--") << "\n";
     std::cout << Cards._assemblyOf[0].getFind("a", "b", "c", "d", "z") << "\n";
