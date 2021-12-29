@@ -1,0 +1,16 @@
+{
+	"Nebo" : 
+	{
+		"info" : 
+		{
+			"inf1" : "val1",
+			"inf2" : "val2"
+		},
+		"path" : "G:\\CK2G\\CrusaderKingsStoryGen.exe.config",
+		"tags" : 
+		[
+			"tag1",
+			"tag2"
+		]
+	}
+}

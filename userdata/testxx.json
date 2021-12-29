@@ -1,0 +1,16 @@
+{
+	"neww" : 
+	{
+		"info" : 
+		{
+			"test" : "write",
+			"test1" : "not write"
+		},
+		"tags" : 
+		[
+			"book",
+			"big"
+		]
+	},
+	"path" : null
+}

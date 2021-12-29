@@ -5,6 +5,7 @@
 
 #include "ui.h"
 
+using namespace my_item;
 //ImVector<MyItem> items;
 char* PROGRAM_NAME = _pgmptr;
 
@@ -67,7 +68,7 @@ char editBuff[64] = "";
 char testName1[64] = "Not tagged";
 
 char* getPathOnly();
-char* getPathUser();
+//char* getPathUser();
 std::string userPath = getPathUser();
 
 //bool can_update;
@@ -146,11 +147,9 @@ char* getFileNameOnly(char* fullName) {
     //std::cout << __FUNCTION__ << "\n";
 
     std::string convString;
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     
     convString.assign(fullName);
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
@@ -164,11 +163,9 @@ char* getFileNameOnly(char* fullName) {
 
 std::string getFileNameOnlyStr(char* fullName) {
     std::string convString;
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
     convString.assign(fullName);
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
@@ -181,11 +178,9 @@ std::string getFileNameOnlyStr(char* fullName) {
 }
 
 char* getPathOnly() {
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
-    pathString.assign(myPath);
-
+    
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
 
@@ -194,19 +189,15 @@ char* getPathOnly() {
     return result;
 }
 
-char* getPathUser() {
-    std::string pathString;
-    char* myPath = getPathExe();
+std::string getPathUser()
+{
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
     pathString += "userdata\\";
-
-    char* result = _strdup(pathString.c_str());
-    //canShow = 1;
-    return result;
+    return pathString;
 }
 
 /////////////////////////////////////////////////////////////////// UI: popup windows
@@ -314,7 +305,7 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
 bool popCreate() {
     bool result = false;
 
-    char* myPath = getPathUser();
+    std::string myPath = getPathUser();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -397,7 +388,7 @@ void popSearch(libCardAssembly Cards) {
     std::vector<libCard> libCards = Cards._assemblyOf;
     //ImVector<MyItem> items = Cards._assemblyView;
 
-    char* myPath = getPathUser();
+    //std::string myPath = getPathUser();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -858,13 +849,9 @@ void setTableClipItm(std::vector<libCard> libCards, ImVector<MyItem>& items) {
 
 libCardAssembly setDataArrays1()
 {
-    libCardAssembly Cards;
-
     std::vector<libCard> libCardsTemp;
-
     funcValidFilesProcessClass(getPathUser(), libCardsTemp);
-
-    Cards.setUp(libCardsTemp);
+	libCardAssembly Cards = libCardAssembly(libCardsTemp);
 
     std::cout << Cards._assemblyOf[0].getFind("--", "seri", "--", "--", "--") << "\n";
     std::cout << Cards._assemblyOf[0].getFind("a", "b", "c", "d", "z") << "\n";

@@ -1,0 +1,17 @@
+{
+	"Solo" : 
+	{
+		"info" : 
+		{
+			"genre" : "thriller",
+			"year" : "1983"
+		},
+		"path" : "S:\\imgui-master\\examples\\README.txt",
+		"tags" : 
+		[
+			"film",
+			"modern"
+		]
+	},
+	"path" : "S:\\imgui-master\\examples\\README.txt"
+}

@@ -1,8 +1,17 @@
 #include "libCardAssembly.h"
 #include <fstream>
 #include <iostream> 
+#include <imgui.h>
 
-void libCardAssembly::setUp(std::vector<libCard> assemblyOf_I) {
+using namespace my_item;
+// Hey, mom, look, constructor!
+libCardAssembly::libCardAssembly(std::vector<libCard>& assemblyOf_I)
+{
+	setUp(assemblyOf_I);
+}
+
+void libCardAssembly::setUp(std::vector<libCard>& assemblyOf_I)
+{
 
     clearC();
     clearV();
@@ -29,7 +38,7 @@ void libCardAssembly::setUp(std::vector<libCard> assemblyOf_I) {
     std::cout << __FUNCTION__ << ": " << _assemblyView[0].Name << "\n";
 }
 
-ImVector<MyItem> libCardAssembly::getView() {
+ImVector<MyItem>& libCardAssembly::getView() {
     return _assemblyView;
 }
 

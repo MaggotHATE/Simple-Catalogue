@@ -1,0 +1,18 @@
+{
+	"Book1" : 
+	{
+		"info" : 
+		{
+			"one" : "три",
+			"three" : "four1"
+		},
+		"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\Release\\Book1.json",
+		"tags" : 
+		[
+			"book",
+			"big",
+			"new"
+		]
+	},
+	"path" : "S:\\imgui-master\\examples\\example_win32_directx9\\Release\\Book1.json"
+}

@@ -1,0 +1,19 @@
+{
+	"Added" : 
+	{
+		"info" : 
+		{
+			"genre" : "something",
+			"year" : "1984"
+		},
+		"path" : "G:\\ZLauncher\\zlauncher.ini",
+		"tags" : 
+		[
+			"test",
+			"книга",
+			"фильм",
+			"series"
+		]
+	},
+	"path" : null
+}

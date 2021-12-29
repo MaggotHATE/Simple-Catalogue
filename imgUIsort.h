@@ -16,7 +16,7 @@
 #endif
 
 
-namespace
+namespace my_item
 {
     // We are passing our own identifier to TableSetupColumn() to facilitate identifying columns in the sorting code.
     // This identifier will be passed down into ImGuiTableSortSpec::ColumnUserID.
@@ -50,35 +50,6 @@ namespace
         static const ImGuiTableSortSpecs* s_current_sort_specs1;
 
         // Compare function to be used by qsort()
-        static int IMGUI_CDECL CompareWithSortSpecs1(const void* lhs, const void* rhs)
-        {
-            const MyItem* a = (const MyItem*)lhs;
-            const MyItem* b = (const MyItem*)rhs;
-            for (int n = 0; n < s_current_sort_specs1->SpecsCount; n++)
-            {
-                // Here we identify columns using the ColumnUserID value that we ourselves passed to TableSetupColumn()
-                // We could also choose to identify columns based on their index (sort_spec->ColumnIndex), which is simpler!
-                const ImGuiTableColumnSortSpecs* sort_spec = &s_current_sort_specs1->Specs[n];
-                int delta = 0;
-                switch (sort_spec->ColumnUserID)
-                {
-                case MyItemColumnID_ID:             delta = (a->ID - b->ID);                break;
-                case MyItemColumnID_Name:           delta = (strcmp(a->Name, b->Name));     break;
-                case MyItemColumnID_Tags:       delta = (strcmp(a->Tags, b->Tags));    break;
-                case MyItemColumnID_Info:    delta = (strcmp(a->Info, b->Info));     break;
-                case MyItemColumnID_Path:    delta = (strcmp(a->Path, b->Path));     break;
-                default: IM_ASSERT(0); break;
-                }
-                if (delta > 0)
-                    return (sort_spec->SortDirection == ImGuiSortDirection_Ascending) ? +1 : -1;
-                if (delta < 0)
-                    return (sort_spec->SortDirection == ImGuiSortDirection_Ascending) ? -1 : +1;
-            }
-
-            // qsort() is instable so always return a way to differenciate items.
-            // Your own compare function may want to avoid fallback on implicit sort specs e.g. a Name compare if it wasn't already part of the sort specs.
-            return (a->ID - b->ID);
-        }
+		static int IMGUI_CDECL CompareWithSortSpecs1(const void* lhs, const void* rhs);
     };
-    const ImGuiTableSortSpecs* MyItem::s_current_sort_specs1 = NULL;
 }

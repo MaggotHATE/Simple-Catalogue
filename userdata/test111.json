@@ -1,0 +1,47 @@
+{
+	"testread1" : 
+	{
+		"window1" : 
+		[
+			"Testjson read Window1",
+			"Hello, json!",
+			"Close me, goodbye!"
+		],
+		"menu1" : 
+		[
+			"Open...",
+			"Edit...",
+			"Close...",
+			"Open a file:"
+		],
+		"Edit..." : 
+		[
+			"Redo...",
+			"Cut...",
+			"Copy...",
+			"Paste..."
+		],
+		"Close..." : 
+		[
+			"Close this window, too"
+		],
+		"warrior1" : 
+		[
+			"Marksman",
+			"Block",
+			"HeavyArmor",
+			"Onehanded",
+			"Smithing",
+			"Twohanded"
+		],
+		"thief" : 
+		[
+			"Alchemy",
+			"LightArmor",
+			"Lockpicking",
+			"Pickpocket",
+			"Sneak",
+			"Speechcraft"
+		]
+	}
+}
