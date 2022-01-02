@@ -22,11 +22,12 @@ void libUI::setUp(std::vector<libCard>& assemblyOf_I)
         const int template_n = n % assemblyOf_I.size();
         MyItem& item = _assemblyView[n];
         item.ID = n;
+        libCard& src = assemblyOf_I[template_n];
 
-        item.Name = assemblyOf_I[template_n].getName();
-        item.Tags = assemblyOf_I[template_n].getTags();
-        item.Path = assemblyOf_I[template_n].getPath();
-        item.Info = funcAssembleFromMap(assemblyOf_I[template_n].getInfo());
+        item.Name = src.getName();
+        item.Tags = src.getTags();
+        item.Path = src.getPath();
+        item.Info = funcAssembleFromMap(src.getInfo());
 
 
     }
