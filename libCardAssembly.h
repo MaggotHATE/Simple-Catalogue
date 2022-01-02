@@ -1,22 +1,40 @@
 #pragma once
 
-#include "libCard.h"
+#include "libUI.h"
 
-class libCardAssembly {
+
+class libCardAssembly 
+{
 public:
-    //libCardAssembly(std::vector<libCard> assemblyOf_I);
-    void setUp(std::vector<libCard> assemblyOf_I);
-    ImVector<MyItem> getView();
-    std::vector<libCard> getCards();
-    libCard getACard(int idx);
-    MyItem getAView(int idx);
-    void clearC();
-    void clearV();
-    std::vector<libCard> _assemblyOf;
-    ImVector<MyItem> _assemblyView;
+	//Absence of default constructor is equal to:
+	libCardAssembly() = default;
+    libCardAssembly(std::vector<libCard>& assemblyOf_I);
 
-    //private:
-    //    std::vector<libCard> _assemblyOf;
-    //    ImVector<MyItem> _assemblyView;
+    libUI& getUI();
+    std::vector<libCard>& getCards();
+    libCard getACard(int idx);
+    //my_item::MyItem getAUI(int idx);
+    int getCardIdx(int idx);
+
+    void clearC();
+    //void clearV();
+
+    bool setACard(libCard aCard, int idx);
+
+    bool setCname(char* name, int idx);
+
+    bool setCtags(char* name, int idx);
+
+    bool setCpath(char* name, int idx);
+
+    bool setCinfo(CharMap info, int idx);
+
+
+    bool libCardAssembly::setData(int idx, char* name = "--", char* tags = "--", char* path = "--", std::map<char*, char*> inform = {{"NULL","NULL"}});
+
+    private:
+        libUI _assemblyView;
+        std::vector<libCard> _assemblyOf;
+		void setUp(std::vector<libCard>& assemblyOf_I);
 
 };

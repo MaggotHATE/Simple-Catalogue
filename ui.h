@@ -17,7 +17,7 @@
 
 
 void setTableClip(libCardAssembly& libCards);
-void setTableClipItm(std::vector<libCard> libCards, ImVector<MyItem>& items);
+void setTableClipItm(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 
 
 int funcCloseFileOpened();
@@ -30,7 +30,7 @@ int funcCloseFileOpened();
 //void setDataArrays();
 //void setDataArrays(std::vector<libCard>& libCards);
 libCardAssembly setDataArrays1();
-void setDataArraysItems(std::vector<libCard> libCards, ImVector<MyItem>& items);
+void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 //void updateDataArraysItems(std::vector<libCard> libCards, int n);
 //void updateDataArrays(std::vector<libCard>& libCards, int idx = -1, char* name = "NULL", char* tags = "NULL", char* path = "NULL", std::map<char*, char*> info = {{"NULL","RESULT"}});
 char* getFileNameOnly(char* fullName);
@@ -41,7 +41,7 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n);
 void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
 
 char* getPathOnly();
-char* getPathUser();
+std::string getPathUser();
 
 bool popCreate();
 void popSearch(libCardAssembly Cards);
@@ -52,7 +52,7 @@ extern char* newItemInfoBuffer[];
 
 
 extern std::vector<libCard> libCards;
-extern ImVector<MyItem> items;
+extern ImVector<my_item::MyItem> items;
 extern int hovered = -1;
 
 

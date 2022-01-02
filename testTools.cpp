@@ -11,12 +11,15 @@
 #include <wchar.h>
 
 
+
 namespace fs = std::experimental::filesystem;
 
-char* getPathExe() {
+std::string getPathExe() 
+{
     char myPath[_MAX_PATH + 1];
     GetModuleFileNameA(NULL, myPath, _MAX_PATH);
-    return myPath;
+
+    return std::string(myPath);
 }
 
 void copyChars(char copy[64], char paste[64]) {
@@ -47,14 +50,14 @@ wchar_t* convStr2W(std::string& pathT) {
 }
 
 
-void openFileFolder(char* path)
+void openFileFolder(const std::string&  path)
 {
     std::cout << __FUNCTION__ << " < " << path << "\n";
     //char complPath[256] = "";
     //strcat(complPath, path);
     //strcat(complPath, "userdata/");
     //std::cout << "complPath = " << complPath << "\n";
-    ShellExecuteA(NULL, "open", path, NULL, NULL, SW_SHOWDEFAULT);
+    ShellExecuteA(NULL, "open", path.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 }
 
 void openFileFolderW(wchar_t* path)
@@ -392,7 +395,8 @@ int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards)
 char* WINAPI winOpenAndProcessFl(char* filename)
 {
     char* buffer1 = "NULL";
-    
+    //MessageBoxA(NULL, filename, "File Path", MB_OK);
+
     HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
         COINIT_DISABLE_OLE1DDE);
     if (SUCCEEDED(hr))
@@ -435,9 +439,10 @@ char* WINAPI winOpenAndProcessFl(char* filename)
                         //CharToOem(pszFilePath, buffer);
                         //WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, pszFilePath, -1, buffer, wcslen(pszFilePath), NULL, NULL);
                         //_wcstombs_l(buffer, pszFilePath, 5000, _create_locale(LC_ALL, "Russian"));
-                        //WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, pszFilePath, -1, buffer, 500, NULL, NULL);
+                        //WideCharToMultiByte(CP_UTF8, 0, pszFilePath, -1, buffer, 500, NULL, NULL);
+                        
 
-                        //wsprintfA(buffer, "%S", pszFilePath);
+                        wsprintfA(buffer, "%S", pszFilePath);
                         //wcstombs_s(&i, buffer, 500, pszFilePath, 1000);
                        
                         //AnsiToOem(buffer, buffer);
@@ -447,8 +452,8 @@ char* WINAPI winOpenAndProcessFl(char* filename)
                         //buffer = destr(myVarS);
                         
 
-                        wsprintfA(buffer, "%S", pszFilePath);
-                        
+                        //wsprintfA(buffer, "%S", pszFilePath);
+                        //MessageBoxA(NULL, destr(buffer), "File Path", MB_OK);
 
                         //std::wcout << "WPATH = " << ws << " VS " << pszFilePath << "\n";
                         //std::cout << "PATH = " << myVarS << " VS " << buffer << "\n";
@@ -518,7 +523,7 @@ char* WINAPI winOpenFl()
                         //std::wcout << "PATH = " << pszFilePath << "\n";
                         //MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
                         size_t i;
-                        char* buffer;
+                        char* buffer = NULL;
                         //wcstombs(buffer, pszFilePath, 500);
                         //WideCharToMultiByte(CP_OEMCP,
                         //    0,

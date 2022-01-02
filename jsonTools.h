@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+#include <windows.h>
 #include <tchar.h>
 #include <string>
 #include <json/json.h>
@@ -14,6 +14,8 @@
 
 
 extern bool isdebug;
+
+typedef std::map<char*, char*> CharMap;
 
 char* wchar_to_char(const wchar_t* pwchar);
 char* wide_to_char1(const WCHAR* source);
@@ -54,4 +56,4 @@ int funcFixPath2(char* filename);
 int funcFixPath3(Json::Value root, char* filename);
 std::string funcBaseGetFromJson(std::string key, std::string& filename);
 wchar_t* convertCharArrayToLPCWSTR(const char* charArray);
-char* funcAssembleFromMap(std::map<char*, char*> charMap);
+char* funcAssembleFromMap(CharMap& charMap);

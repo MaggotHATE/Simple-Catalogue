@@ -2,6 +2,7 @@
 #include <iostream> 
 #include "jsonTools.h"
 #include <filesystem>
+#include <windows.h>
 
 //#define UNICODE
 
@@ -1042,24 +1043,29 @@ std::string funcBaseGetFromJson(std::string key, std::string& filename)
     }
 }
 
-char* funcAssembleFromMap(std::map<char*, char*> charMap) {
+char* funcAssembleFromMap(CharMap& charMap) {
+
+    //std::cout << __FUNCTION__ << "\n";
     std::string tmpStr;
     char* separ = " : ";
 
-    std::map<char*, char*>::iterator it = charMap.begin();
+    CharMap::iterator it = charMap.begin();
     // Iterate over the map using Iterator till end.
     while (it != charMap.end())
     {
-        // Accessing KEY from element pointed by it.
+
         char* key = it->first;
-        // Accessing VALUE from element pointed by it.
-        char* val = it->second;
-        tmpStr += key;
-        tmpStr += separ;
-        tmpStr += val;
-        // Increment the Iterator to point to next entry
+        if (key && key != "NULL") {
+
+            char* val = it->second;
+
+            tmpStr += key;
+            tmpStr += separ;
+            tmpStr += val;
+            
+        }
         it++;
-        if (it != charMap.end()) tmpStr += "; ";//", \n";
+        if (it != charMap.end() && key && key != "NULL") tmpStr += "; ";
     }
     //std::cout << tmpStr << "\n";
     return destr(tmpStr);

@@ -5,6 +5,7 @@
 
 #include "ui.h"
 
+using namespace my_item;
 //ImVector<MyItem> items;
 char* PROGRAM_NAME = _pgmptr;
 
@@ -67,7 +68,7 @@ char editBuff[64] = "";
 char testName1[64] = "Not tagged";
 
 char* getPathOnly();
-char* getPathUser();
+//char* getPathUser();
 std::string userPath = getPathUser();
 
 //bool can_update;
@@ -146,29 +147,25 @@ char* getFileNameOnly(char* fullName) {
     //std::cout << __FUNCTION__ << "\n";
 
     std::string convString;
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     
     convString.assign(fullName);
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
     int pathLen = pathString.length();
     //defPos = convString.find("example_win32_directx9.exe");
     convString.erase(0, pathLen);
-    char* result = _strdup(convString.c_str());
+    char* result = destr(convString);
     //canShow = 1;
     return result;
 }
 
 std::string getFileNameOnlyStr(char* fullName) {
     std::string convString;
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
     convString.assign(fullName);
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
@@ -181,32 +178,26 @@ std::string getFileNameOnlyStr(char* fullName) {
 }
 
 char* getPathOnly() {
-    std::string pathString;
-    char* myPath = getPathExe();
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
-    pathString.assign(myPath);
-
+    
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
 
-    char* result = _strdup(pathString.c_str());
+    char* result = destr(pathString);
     //canShow = 1;
     return result;
 }
 
-char* getPathUser() {
-    std::string pathString;
-    char* myPath = getPathExe();
+std::string getPathUser()
+{
+    std::string pathString = getPathExe();
     //std::cout << __FUNCTION__ << "\n";
-    pathString.assign(myPath);
 
     int defPos = pathString.find(PROGRAM_NAME);
     pathString.erase(defPos);
     pathString += "userdata\\";
-
-    char* result = _strdup(pathString.c_str());
-    //canShow = 1;
-    return result;
+    return pathString;
 }
 
 /////////////////////////////////////////////////////////////////// UI: popup windows
@@ -214,8 +205,8 @@ char* getPathUser() {
 
 
 void popElementEditSimple(libCardAssembly& Cards, int row_n) {
-    //std::vector<libCard> libCards = Cards._assemblyOf;
-    //ImVector<MyItem> items = Cards._assemblyView;
+    //std::vector<libCard> libCards = Cards.getCards();
+    //ImVector<MyItem> items = Cards.getUI();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -224,24 +215,26 @@ void popElementEditSimple(libCardAssembly& Cards, int row_n) {
     if (ImGui::BeginPopupModal(editTags, NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
 
-        
-        char* filename = Cards._assemblyOf[row_n].getName();
+        int row_x = Cards.getCardIdx(row_n);
+        char* filename = Cards.getCards()[row_x].getName();
         ImGui::Text(filename);
         ImGui::Separator();
 
         ImGui::InputText(table_tags, editBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
 
-        //std::cout << "PreTags = " << items[row_x].Tags << " vs " << libCards[row_x].getTags() << "\n";
+        //std::cout << "PreTags = " << Cards.getUI()[row_x].Tags << " vs " << Cards.getCards()[Cards.getUI()[row_x].ID].getTags() << "\n";
 
         if (ImGui::Button(popOK, ImVec2(120, 0))) {
 
             funcWriteJson_tags(editBuff, filename);
             //can_update = true;
 
-            Cards._assemblyOf[row_n].setTags(editBuff);
-            Cards._assemblyView[row_n].Tags = Cards._assemblyOf[row_n].getTags();
+            //Cards.getCards()[row_x].setTags(editBuff);
+            //Cards.getUI()[row_n].Tags = Cards.getCards()[row_x].getTags();
+            Cards.setData(row_n, "--", editBuff);
 
-            std::cout << "Tags = " << Cards._assemblyView[row_n].Tags << " vs " << Cards._assemblyOf[row_n].getTags() << " FROM " << editBuff << "\n";
+
+            //std::cout << "Tags = " << Cards.getUI()[row_x].Tags << " vs " << Cards.getCards()[row_x].getTags() << " FROM " << editBuff << "\n";
 
             ImGui::CloseCurrentPopup();
         }
@@ -253,8 +246,8 @@ void popElementEditSimple(libCardAssembly& Cards, int row_n) {
 }
 
 void popElementEditDouble(libCardAssembly& Cards, int row_n) {
-    std::vector<libCard> libCards = Cards._assemblyOf;
-    ImVector<MyItem> items = Cards._assemblyView;
+    std::vector<libCard> libCards = Cards.getCards();
+    libUI items = Cards.getUI();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -263,7 +256,8 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
     if (ImGui::BeginPopupModal(editInfo, NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
 
-        char* filename = Cards._assemblyOf[row_n].getName();
+        int row_x = Cards.getCardIdx(row_n);
+        char* filename = Cards.getCards()[row_x].getName();
         ImGui::Text(filename);
         ImGui::Separator();
 
@@ -291,14 +285,16 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
                 name[1] = destr(fileInfo2nNewBuff);
                 value[1] = destr(fileInfo2vNewBuff);
             }
-            std::cout << numBuff << " funcWriteJsonSimpleSubData val[1] = " << destr(fileInfo2vNewBuff) << "\n";
+            //std::cout << numBuff << " funcWriteJsonSimpleSubData val[1] = " << destr(fileInfo2vNewBuff) << "\n";
             funcWriteJsonSimpleSubData(numBuff, name, value, filename);
             std::map<char*, char*> infoMapG = funcGetInfoMap(filename);
 
-            Cards._assemblyOf[row_n].setInfo(infoMapG);
-            Cards._assemblyView[row_n].Info = funcAssembleFromMap(Cards._assemblyOf[row_n].getInfo());
+            //Cards.getCards()[row_x].setInfo(infoMapG);
+            //Cards.getUI()[row_n].Info = funcAssembleFromMap(Cards.getCards()[row_x].getInfo());
 
-            std::cout << "Path = " << Cards._assemblyView[row_n].Info << " vs " << funcAssembleFromMap(Cards._assemblyOf[row_n].getInfo()) << "; " << row_n << "\n";
+            Cards.setData(row_n, "--", "--","--", infoMapG);
+
+            //std::cout << "Path = " << Cards.getUI()[row_x].Info << " vs " << funcAssembleFromMap(Cards.getCards()[row_x].getInfo()) << "; " << row_n << "\n";
             //can_update = true;
             ImGui::CloseCurrentPopup();
         }
@@ -314,7 +310,7 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
 bool popCreate() {
     bool result = false;
 
-    char* myPath = getPathUser();
+    std::string myPath = getPathUser();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -394,10 +390,10 @@ bool popCreate() {
 }
 
 void popSearch(libCardAssembly Cards) {
-    std::vector<libCard> libCards = Cards._assemblyOf;
-    //ImVector<MyItem> items = Cards._assemblyView;
+    std::vector<libCard> libCards = Cards.getCards();
+    //ImVector<MyItem> items = Cards.getUI();
 
-    char* myPath = getPathUser();
+    //std::string myPath = getPathUser();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -443,9 +439,9 @@ void popSearch(libCardAssembly Cards) {
             if (searchBuffInfoVal != "" && searchBuffInfoVal[0] != '\0') Sinfoval = searchBuffInfoVal;
 
             if (searchCards.empty()) {
-                for (int n = 0; n < Cards._assemblyOf.size(); n++)
+                for (int n = 0; n < Cards.getCards().size(); n++)
                 {
-                    if (Cards._assemblyOf[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(Cards._assemblyOf[n]);
+                    if (Cards.getCards()[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(Cards.getCards()[n]);
                 }
                 setDataArraysItems(searchCards, searchItems);
             }
@@ -470,21 +466,22 @@ void popSearch(libCardAssembly Cards) {
 /////////////////////////////////////////////////////////////////// needs more work
 
 void editPathContext(libCardAssembly& Cards, int row_n) {
-    std::vector<libCard> libCards = Cards._assemblyOf;
-    ImVector<MyItem> items = Cards._assemblyView;
+    std::vector<libCard> libCards = Cards.getCards();
+    libUI items = Cards.getUI();
 
-    if (ImGui::BeginPopup(items[row_n].Name))
+    if (ImGui::BeginPopup(items.getAUI(row_n).Name))
     {
         //MyItem* item = &items[row_n];
+
         std::string buttonOpenFile = open_num + std::to_string(row_n);
         //ImGui::SmallButton(destr(buttonOpenFile));
         if (ImGui::Selectable(destr(buttonOpenFile))) {
 
-
+            int row_x = Cards.getCardIdx(row_n);
            // std::cout << "path = " << item->Path << "; " << row_n << "\n";
-            std::cout << "path1 = " << funcGetDataPathNew(getFileNameOnly(Cards._assemblyOf[row_n].getName())) << "\n";
+            std::cout << "path1 = " << funcGetDataPathNew(getFileNameOnly(Cards.getCards()[row_x].getName())) << "\n";
 
-            ShellExecuteA(NULL, "open", destr(stringConvert(Cards._assemblyOf[row_n].getPath(), CP_UTF8, 0, CP_THREAD_ACP, 0)), NULL, NULL, SW_SHOWDEFAULT);
+            ShellExecuteA(NULL, "open", destr(stringConvert(Cards.getCards()[row_x].getPath(), CP_UTF8, 0, CP_THREAD_ACP, 0)), NULL, NULL, SW_SHOWDEFAULT);
             ImGui::CloseCurrentPopup();
         }
         //ImGui::SameLine();
@@ -492,8 +489,8 @@ void editPathContext(libCardAssembly& Cards, int row_n) {
         if (ImGui::Selectable(destr(buttonOpenPath))) {
 
 
-
-            char* value2 = destr(stringConvert(filePathFull(Cards._assemblyOf[row_n].getPath()), CP_UTF8, 0, CP_THREAD_ACP, 0));
+            int row_x = Cards.getCardIdx(row_n);
+            char* value2 = destr(stringConvert(filePathFull(Cards.getCards()[row_x].getPath()), CP_UTF8, 0, CP_THREAD_ACP, 0));
 
             openFileFolder(value2);
 
@@ -504,17 +501,21 @@ void editPathContext(libCardAssembly& Cards, int row_n) {
 
         if (ImGui::Selectable(destr(buttonPath))) {
 
-            std::cout << "\n BEGIN Path = " << Cards._assemblyView[row_n].Path << " vs " << Cards._assemblyOf[row_n].getPath() << "; " << row_n << "\n";
+
+            int row_x = Cards.getCardIdx(row_n);
+            std::cout << "\n BEGIN Path = " << Cards.getUI().getAUI(row_x).Path << " vs " << Cards.getCards()[row_x].getPath() << "; " << row_n << "\n";
 
 
-            char* newPath = winOpenAndProcessFl(Cards._assemblyOf[row_n].getName());
+            char* newPath = winOpenAndProcessFl(Cards.getCards()[row_x].getName());
 
             if (newPath != "NULL") {
 
-                Cards._assemblyOf[row_n].setPath(newPath);
-                Cards._assemblyView[row_n].Path = Cards._assemblyOf[row_n].getPath();
+                //Cards.getCards()[row_x].setPath(newPath);
+                //Cards.getUI()[row_n].Path = Cards.getCards()[row_x].getPath();
 
-                std::cout << "Path = " << Cards._assemblyView[row_n].Path << " vs " << Cards._assemblyOf[row_n].getPath() << "; " << row_n << "\n";
+                Cards.setData(row_n, "--", "--", newPath);
+
+                std::cout << "Path = " << Cards.getUI().getAUI(row_x).Path << " vs " << Cards.getCards()[row_x].getPath() << "; " << row_n << "\n";
                 ImGui::CloseCurrentPopup();
             }
 
@@ -529,24 +530,27 @@ void editTagsContext(libCardAssembly& Cards, int row_n) {
 
 
 
-    if (ImGui::BeginPopup(Cards._assemblyView[row_n].Tags)) {
+//    if (ImGui::BeginPopup(Cards.getUI()[row_n].Tags)) {
+        
 
-        char* tempName = Cards._assemblyOf[row_n].getName();
+
+        char* tempName = Cards.getCards()[Cards.getCardIdx(row_n)].getName();
         std::string nameOnlyStr = getFileNameOnly(tempName);
         std::string buttonEditName = editTags + funcGetIdxNameStr(nameOnlyStr, 0);
+        //std::cout << "\n" << "BEFORE " << ": " << row_n << "; " << tempName << "\n";
 
         if (ImGui::SmallButton(destr(buttonEditName))) {
 
+            int row_x = Cards.getCardIdx(row_n);
+            editName = Cards.getCards()[row_x].getName();
+            char* Ttags = Cards.getCards()[row_x].getTags();
 
-            editName = Cards._assemblyOf[row_n].getName();
-            char* Ttags = Cards._assemblyOf[row_n].getTags();
-
-            std::cout << "\n" << "AFTER " << ": " << Ttags << "; " << "\n";
+            //std::cout << "\n" << "AFTER " << ": " << Ttags << "; " << "\n";
             copyChars2(editBuff, Ttags);
 
 
 
-            std::cout << "Button Tags = " << editName << " with " << Ttags << "; " << row_n << "\n";
+            //std::cout << "Button Tags = " << editName << " with " << Ttags << "; " << row_n << "\n";
 
             //ImGui::CloseCurrentPopup();
             ImGui::OpenPopup(editTags);
@@ -554,33 +558,37 @@ void editTagsContext(libCardAssembly& Cards, int row_n) {
 
         popElementEditSimple(Cards, row_n);
 
-        ImGui::EndPopup();
-    }
+//        ImGui::EndPopup();
+ //   }
 }
 
 void editInfoContext(libCardAssembly& Cards, int row_n) {
 
 
-    std::vector<libCard> libCards = Cards._assemblyOf;
-    ImVector<MyItem> items = Cards._assemblyView;
+    std::vector<libCard> libCards = Cards.getCards();
+    libUI items = Cards.getUI();
 
-    if (ImGui::BeginPopup(items[row_n].Info))
+    if (ImGui::BeginPopup(items.getAUI(row_n).Info))
     {
 
-        MyItem* item = &items[row_n];
+        int row_x = Cards.getCardIdx(row_n);
+        //MyItem* item = &items[row_n];
     
-        char* tempName = libCards[row_n].getName();
+        char* tempName = libCards[row_x].getName();
 
         std::string nameOnlyStr = getFileNameOnly(tempName);
-        char* nameOnly = destr(nameOnlyStr);
-        char* infoG = funcAssembleFromMap(libCards[row_n].getInfo());
+
 
         std::string buttonInfoEditName = editInfo + funcGetIdxNameStr(nameOnlyStr, 0);
         if (ImGui::SmallButton(destr(buttonInfoEditName))) {
-            editName = libCards[row_n].getName();
+
+            char* nameOnly = destr(nameOnlyStr);
+            char* infoG = libCards[row_x].getInfoChar();
+
+            editName = libCards[row_x].getName();
 
             if (infoG != "") {
-                std::vector<std::map<std::string, std::string>> tempMap = funcGetInfoPairs(libCards[row_n].getName());
+                std::vector<std::map<std::string, std::string>> tempMap = funcGetInfoPairs(libCards[row_x].getName());
 
                 tempMapSize = tempMap.size();
                 std::cout << "tempMapSize = " << tempMapSize << "\n";
@@ -623,8 +631,8 @@ void editInfoContext(libCardAssembly& Cards, int row_n) {
 
 void setTableClip(libCardAssembly& Cards) {
 
-    //std::vector<libCard>& libCards = Cards._assemblyOf;
-    ImVector<MyItem>& items = Cards._assemblyView;
+    //std::vector<libCard>& libCards = Cards.getCards();
+    libUI& items = Cards.getUI();
     // Create item list
 
     const float TEXT_BASE_HEIGHT = ImGui::GetTextLineHeightWithSpacing();
@@ -657,9 +665,15 @@ void setTableClip(libCardAssembly& Cards) {
             if (sorts_specs->SpecsDirty)
             {
                 MyItem::s_current_sort_specs1 = sorts_specs; // Store in variable accessible by the sort function.
-                if (items.Size > 1)
-                    qsort(&items[0], (size_t)items.Size, sizeof(items[0]), MyItem::CompareWithSortSpecs1);
-                //std::cout << items.Size << " : " << sizeof(items[0]) << "\n";
+                
+                MyItem item = items.getAUI(0);
+                int size = items.Size();
+
+                std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
+
+                if (size > 1)
+                    qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
+                
                 MyItem::s_current_sort_specs1 = NULL;
                 sorts_specs->SpecsDirty = false;
             }
@@ -667,46 +681,53 @@ void setTableClip(libCardAssembly& Cards) {
 
         // Demonstrate using clipper for large vertical lists
         ImGuiListClipper clipper;
-        clipper.Begin(items.Size);
+        clipper.Begin(items.Size());
 
         while (clipper.Step())
             for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
             {
 
-                int ID = items[row_n].ID;
-                ImGui::PushID(ID);
+                //int ID = items[row_n].ID;
+                ImGui::PushID(items.ID(row_n));
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
-                ImGui::Text("%04d", ID);
+                ImGui::Text("%04d", items.ID(row_n));
                 ImGui::TableNextColumn();
 
-                if (ImGui::Button(funcGetIdxName(items[row_n].Name, 0))) openFile1(items[row_n].Name);
+                char* name = items.Name(row_n);
+                if (ImGui::Button(funcGetIdxName(name, 0))) openFile1(name);
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items[row_n].Tags);
+                ImGui::Text(items.Tags(row_n));
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    ImGui::OpenPopupContextItem(items[ID].Tags);
+                    ImGui::OpenPopupContextItem(items.Tags(row_n));
                 }
-                editTagsContext(Cards, ID);
+                //editTagsContext(Cards, ID);
+
+                if (ImGui::BeginPopup(items.Tags(row_n)))
+                {
+                    editTagsContext(Cards, row_n);
+                    ImGui::EndPopup();
+                }
 
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items[row_n].Info);
+                ImGui::Text(items.Info(row_n));
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    ImGui::OpenPopupContextItem(items[ID].Info);
+                    ImGui::OpenPopupContextItem(items.Info(row_n));
                 }              
-                editInfoContext(Cards, ID);
+                editInfoContext(Cards, row_n);
 
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items[row_n].Path);
+                ImGui::Text(items.Path(row_n));
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolTip);
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    ImGui::OpenPopupContextItem(items[ID].Name);
+                    ImGui::OpenPopupContextItem(name);
                 }
-                editPathContext(Cards, ID);
+                editPathContext(Cards, row_n);
 
 
                 ImGui::PopID();
@@ -721,8 +742,8 @@ void setTableClip(libCardAssembly& Cards) {
 /////////////////////////////////////////////////////////////////// this is used for search only, bad code duplication, needs more work
 
 void setTableClipItm(std::vector<libCard> libCards, ImVector<MyItem>& items) {
-    //std::vector<libCard> libCards = Cards._assemblyOf;
-    //ImVector<MyItem> items = Cards._assemblyView;
+    //std::vector<libCard> libCards = Cards.getCards();
+    //ImVector<MyItem> items = Cards.getUI();
 
     // Create item list
 
@@ -858,16 +879,12 @@ void setTableClipItm(std::vector<libCard> libCards, ImVector<MyItem>& items) {
 
 libCardAssembly setDataArrays1()
 {
-    libCardAssembly Cards;
-
     std::vector<libCard> libCardsTemp;
-
     funcValidFilesProcessClass(getPathUser(), libCardsTemp);
+	libCardAssembly Cards = libCardAssembly(libCardsTemp);
 
-    Cards.setUp(libCardsTemp);
-
-    std::cout << Cards._assemblyOf[0].getFind("--", "seri", "--", "--", "--") << "\n";
-    std::cout << Cards._assemblyOf[0].getFind("a", "b", "c", "d", "z") << "\n";
+    std::cout << Cards.getCards()[0].getFind("--", "seri", "--", "--", "--") << "\n";
+    std::cout << Cards.getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";
 
     return Cards;
 }
@@ -890,7 +907,7 @@ void setDataArraysItems(std::vector<libCard> libCards, ImVector<MyItem>& items)
             item.Name = libCards[template_n].getName();
             item.Tags = libCards[template_n].getTags();
             item.Path = libCards[template_n].getPath();
-            item.Info = funcAssembleFromMap(libCards[template_n].getInfo());
+            item.Info = libCards[template_n].getInfoChar();
 
             
         }

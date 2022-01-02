@@ -12,7 +12,7 @@
 #include <fstream>
 #include <iostream> 
 
-
+using namespace my_item;
 
 // Data
 static LPDIRECT3D9              g_pD3D = NULL;
@@ -285,8 +285,8 @@ void setDataArraysMap()
     //setDataArrays(libCards);
     Cards = setDataArrays1();
 
-    //std::cout << __FUNCTION__ << ": " << Cards.getView()[0].Name << "\n";
-    std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
+    std::cout << __FUNCTION__ << ": " << Cards.getUI().Name(0) << "\n";
+    //std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
     //setDataArraysItems(libCards);
     can_update = false;
     //need_update = -1;

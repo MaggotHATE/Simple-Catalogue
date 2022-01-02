@@ -4,12 +4,14 @@
 
 //bool isdebug;
 
-libCard::libCard(char* name_C, char* tags_C, char* path_C, std::map<char*, char*> info_C) : name_(name_C), tags_(tags_C), path_(path_C), info_(info_C)
+
+
+libCard::libCard(char* name_C, char* tags_C, char* path_C, CharMap info_C) : name_(name_C), tags_(tags_C), path_(path_C), info_(info_C)
 {
     if (isdebug == true) {
         std::cout << "\n Created libCard: \n Name = " << name_ << "\n Tags = " << tags_ << "\n Path = " << path_ << "\n";
 
-        std::map<char*, char*>::iterator it = info_.begin();
+        CharMap::iterator it = info_.begin();
         // Iterate over the map using Iterator till end.
         while (it != info_.end())
         {
@@ -38,8 +40,12 @@ char* libCard::getPath() {
 }
 
 
-std::map<char*, char*> libCard::getInfo() {
+CharMap libCard::getInfo() {
     return info_;
+}
+
+char* libCard::getInfoChar() {
+    return funcAssembleFromMap(info_);
 }
 
 bool libCard::setName(char* name) {
