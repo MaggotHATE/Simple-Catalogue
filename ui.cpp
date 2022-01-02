@@ -671,8 +671,8 @@ void setTableClip(libCardAssembly& Cards) {
 
                 std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
 
-                if (size > 1)
-                    qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
+                if (size > 1) items.sortUI(0);
+                    //qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
                 
                 MyItem::s_current_sort_specs1 = NULL;
                 sorts_specs->SpecsDirty = false;

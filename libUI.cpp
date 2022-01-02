@@ -96,3 +96,9 @@ bool libUI::setInfo(CharMap info, int idx) {
 
     return true;
 }
+
+char* libUI::sortUI(int idx) {
+    qsort(&_assemblyView[idx], (size_t)_assemblyView.Size, sizeof(_assemblyView[idx]), MyItem::CompareWithSortSpecs1);
+
+    return _assemblyView[idx].Name;
+}

@@ -32,6 +32,8 @@ public:
 
     char* Info(int idx);
 
+    char* sortUI(int idx);
+
     void clearV();
 private:
     ImVector<my_item::MyItem> _assemblyView;
