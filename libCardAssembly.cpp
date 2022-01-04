@@ -42,6 +42,10 @@ libCard libCardAssembly::getACard(int idx) {
     return _assemblyOf[idx];
 }
 
+libCard libCardAssembly::getACardByUi(int idx) {
+    return _assemblyOf[getCardIdx(idx)];
+}
+
 bool libCardAssembly::setACard(libCard aCard, int idx) {
     _assemblyOf[idx] = aCard;
 }
@@ -106,6 +110,12 @@ bool libCardAssembly::setData(int idx, char* name, char* tags, char* path, std::
     }
 
     return true;
+}
+
+///////////////////////////////////// UNIFIED GET
+
+char* libCardAssembly::getCardElem(cardItem flag, int idx) {
+    return getACardByUi(idx).getItem(flag, idx);
 }
 
 ////////////////////////////// CLEARS

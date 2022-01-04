@@ -215,9 +215,9 @@ void popElementEditSimple(libCardAssembly& Cards, int row_n) {
     if (ImGui::BeginPopupModal(editTags, NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
 
-        int row_x = Cards.getCardIdx(row_n);
-        char* filename = Cards.getCards()[row_x].getName();
-        ImGui::Text(filename);
+        //int row_x = Cards.getCardIdx(row_n);
+        char* filename = Cards.getCardElem(CNAME, row_n);
+        ImGui::Text(destr(stringConvert(filename, CP_THREAD_ACP, 0, CP_UTF8, 0)));
         ImGui::Separator();
 
         ImGui::InputText(table_tags, editBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
@@ -247,7 +247,6 @@ void popElementEditSimple(libCardAssembly& Cards, int row_n) {
 
 void popElementEditDouble(libCardAssembly& Cards, int row_n) {
     std::vector<libCard> libCards = Cards.getCards();
-    libUI items = Cards.getUI();
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -256,8 +255,7 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
     if (ImGui::BeginPopupModal(editInfo, NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
 
-        int row_x = Cards.getCardIdx(row_n);
-        char* filename = Cards.getCards()[row_x].getName();
+        char* filename = Cards.getCardElem(CNAME, row_n);
         ImGui::Text(filename);
         ImGui::Separator();
 
@@ -530,7 +528,7 @@ void editTagsContext(libCardAssembly& Cards, int row_n) {
 
 
 
-//    if (ImGui::BeginPopup(Cards.getUI()[row_n].Tags)) {
+    if (ImGui::BeginPopup(Cards.getUI().Tags(row_n))) {
         
 
 
@@ -558,8 +556,8 @@ void editTagsContext(libCardAssembly& Cards, int row_n) {
 
         popElementEditSimple(Cards, row_n);
 
-//        ImGui::EndPopup();
- //   }
+        ImGui::EndPopup();
+   }
 }
 
 void editInfoContext(libCardAssembly& Cards, int row_n) {
@@ -669,7 +667,7 @@ void setTableClip(libCardAssembly& Cards) {
                 MyItem item = items.getAUI(0);
                 int size = items.Size();
 
-                std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
+                //std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
 
                 if (size > 1) items.sortUI(0);
                     //qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
@@ -705,11 +703,11 @@ void setTableClip(libCardAssembly& Cards) {
                 }
                 //editTagsContext(Cards, ID);
 
-                if (ImGui::BeginPopup(items.Tags(row_n)))
-                {
+                //if (ImGui::BeginPopup(items.Tags(row_n)))
+                //{
                     editTagsContext(Cards, row_n);
-                    ImGui::EndPopup();
-                }
+                    //ImGui::EndPopup();
+                //}
 
                 ImGui::TableNextColumn();
 

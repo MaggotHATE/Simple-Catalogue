@@ -16,6 +16,10 @@ public:
     //my_item::MyItem getAUI(int idx);
     int getCardIdx(int idx);
 
+    libCard getACardByUi(int idx);
+
+    char* getCardElem(cardItem flag, int idx);
+
     void clearC();
     //void clearV();
 

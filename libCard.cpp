@@ -4,8 +4,6 @@
 
 //bool isdebug;
 
-
-
 libCard::libCard(char* name_C, char* tags_C, char* path_C, CharMap info_C) : name_(name_C), tags_(tags_C), path_(path_C), info_(info_C)
 {
     if (isdebug == true) {
@@ -139,6 +137,21 @@ int libCard::getFind(char* name, char* tags, char* path, char* infoKey, char* in
     }
 
     return result;
+}
+
+char* libCard::getItem(cardItem flag, int idx) {
+    if (flag == CNAME) {
+        return getName();
+    }
+    else if (flag == CTAGS)  {
+        return getTags();
+    }
+    else if (flag == CPATH) {
+        return getPath();
+    }
+    else if (flag == CINFO) {
+        return getInfoChar();
+    }
 }
 
 bool libCard::empty() {
