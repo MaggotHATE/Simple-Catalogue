@@ -67,6 +67,9 @@
     <ClCompile Include="libUI.cpp">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="uiClass.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -116,6 +119,9 @@
       <Filter>imgui\backends</Filter>
     </ClInclude>
     <ClInclude Include="libUI.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiClass.h">
       <Filter>sources</Filter>
     </ClInclude>
   </ItemGroup>

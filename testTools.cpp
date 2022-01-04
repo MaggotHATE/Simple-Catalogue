@@ -14,13 +14,7 @@
 
 namespace fs = std::experimental::filesystem;
 
-std::string getPathExe() 
-{
-    char myPath[_MAX_PATH + 1];
-    GetModuleFileNameA(NULL, myPath, _MAX_PATH);
 
-    return std::string(myPath);
-}
 
 void copyChars(char copy[64], char paste[64]) {
     memset(&(copy[0]), 0, 64);
@@ -32,14 +26,7 @@ void copyChars(char copy[64], char paste[64]) {
     }
 }
 
-void copyChars2(char copy[64], char paste[64]) {
-    std::cout << __FUNCTION__ << " 1= \n " << copy << " \n " << paste << "\n";
-    memset(&copy[0], 0, sizeof(copy));
-    std::cout << __FUNCTION__ << " 2= \n " << copy << " \n " << paste << "\n";
-    //std::string tmp = paste;
-    strncpy(copy, paste, 64);
-    std::cout << __FUNCTION__ << " 3= \n " << copy << " \n " << paste << "\n";
-}
+
 
 wchar_t* convStr2W(std::string& pathT) {
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -563,3 +550,5 @@ char* WINAPI winOpenFl()
 
     return winOpenResult;
 }
+
+

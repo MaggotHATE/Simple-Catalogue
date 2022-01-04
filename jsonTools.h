@@ -12,11 +12,15 @@
 #include <codecvt>
 #include "imgUIsort.h"
 
-
+//////////////////// don't forget to remove all globals
 extern bool isdebug;
+///////////////////////////////////////////////////////
 
 typedef std::map<char*, char*> CharMap;
 
+
+std::string getPathExe();
+void copyChars2(char copy[64], char paste[64]);
 char* wchar_to_char(const wchar_t* pwchar);
 char* wide_to_char1(const WCHAR* source);
 void jsonRewriteFile(Json::Value root, char* filename, bool isUTF8);
@@ -30,6 +34,7 @@ int funcWriteJsonSimpleData3(char* key, std::string value, char* filename);
 int funcWriteJsonSimpleSubData(int buf, char* key[], char* value[], char*& filename);
 int funcWriteJsonSimpleSubDataStr(int buf, std::string key[], std::string value[], char*& filename);
 int funcWriteJsonWriterData(char* key, char* value, char* filename);
+int funcWriteJsonInfoClass(std::vector<char*> uiBuffers, char*& filename);
 int funcWriteJson_tags(char* tags, char* filename);
 const char* funcHasTags(char* filename);
 char* funcGetIdxName(char*& filename, int idx);
@@ -57,3 +62,8 @@ int funcFixPath3(Json::Value root, char* filename);
 std::string funcBaseGetFromJson(std::string key, std::string& filename);
 wchar_t* convertCharArrayToLPCWSTR(const char* charArray);
 char* funcAssembleFromMap(CharMap& charMap);
+
+char* getFileNameOnly(char* fullName);
+std::string getFileNameOnlyStr(char* fullName);
+char* getPathOnly();
+std::string getPathUser();

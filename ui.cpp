@@ -7,7 +7,7 @@
 
 using namespace my_item;
 //ImVector<MyItem> items;
-char* PROGRAM_NAME = _pgmptr;
+//char* PROGRAM_NAME = _pgmptr;
 
 char* name_app;
 char* intro;
@@ -63,7 +63,7 @@ char buffName[64] = "";
 char* buffVal = "";
 char* tempNamePop = "";
 char* editName = "";
-char editBuff[64] = "";
+char* editBuff = new char[64];
 
 char testName1[64] = "Not tagged";
 
@@ -79,6 +79,41 @@ int tempMapSize;
 std::vector<libCard> searchCards;
 ImVector<MyItem> searchItems;
 
+
+translateDB loadTranslationDB(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current) {
+    translateDB translationDB;
+    fileTranslateEn = translationsList[item_current];
+    translationDB.intro = destr(funcBaseGetFromJson("intro", fileTranslateEn));
+    translationDB.button_create = destr(funcBaseGetFromJson("button_create", fileTranslateEn));
+    translationDB.button_search = destr(funcBaseGetFromJson("button_search", fileTranslateEn));
+    translationDB.search_key = destr(funcBaseGetFromJson("search_key", fileTranslateEn));
+    translationDB.search_val = destr(funcBaseGetFromJson("search_val", fileTranslateEn));
+    translationDB.check_catalogue = destr(funcBaseGetFromJson("check_catalogue", fileTranslateEn));
+    translationDB.table_name = destr(funcBaseGetFromJson("table_name", fileTranslateEn));
+    translationDB.table_tags = destr(funcBaseGetFromJson("table_tags", fileTranslateEn));
+    translationDB.table_info = destr(funcBaseGetFromJson("table_info", fileTranslateEn));
+    translationDB.table_path = destr(funcBaseGetFromJson("table_path", fileTranslateEn));
+    translationDB.create_name = destr(funcBaseGetFromJson("create_name", fileTranslateEn));
+    translationDB.create_tags = destr(funcBaseGetFromJson("create_tags", fileTranslateEn));
+    translationDB.create_info = destr(funcBaseGetFromJson("create_info", fileTranslateEn));
+    translationDB.create_path = destr(funcBaseGetFromJson("create_path", fileTranslateEn));
+    translationDB.name_app = destr(funcBaseGetFromJson("name_app", fileTranslateEn));
+    translationDB.refresh = destr(funcBaseGetFromJson("refresh", fileTranslateEn));
+    translationDB.edit = destr(funcBaseGetFromJson("edit", fileTranslateEn));
+    translationDB.editTags = destr(funcBaseGetFromJson("editTags", fileTranslateEn));
+    translationDB.editInfo = destr(funcBaseGetFromJson("editInfo", fileTranslateEn));
+    translationDB.info = destr(funcBaseGetFromJson("info", fileTranslateEn));
+    translationDB.add_path = destr(funcBaseGetFromJson("add_path", fileTranslateEn));
+    translationDB.open_num = destr(funcBaseGetFromJson("open_num", fileTranslateEn));
+    translationDB.open_folder_num = destr(funcBaseGetFromJson("open_folder_num", fileTranslateEn));
+    translationDB.edit_path_num = destr(funcBaseGetFromJson("create_path", fileTranslateEn));
+    translationDB.toolTip = destr(funcBaseGetFromJson("toolTip", fileTranslateEn));
+    translationDB.popOK = destr(funcBaseGetFromJson("popOK", fileTranslateEn));
+    translationDB.popBACK = destr(funcBaseGetFromJson("popBACK", fileTranslateEn));
+    translationDB.item_current = item_current;
+
+    return translationDB;
+}
 
 void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB) {
     fileTranslateEn = translationsList[translationDB.item_current];
@@ -128,77 +163,23 @@ void loadTranslation(std::string fileTranslateEn, std::vector<char*> translation
 
     
 
-    translationDB.name_app = name_app;
-    translationDB.intro = intro;
-    translationDB.button_create = button_create;
-    translationDB.refresh = refresh;
-    translationDB.button_search = button_search;
-    translationDB.check_catalogue = check_catalogue;
+    //translationDB.name_app = name_app;
+    //translationDB.intro = intro;
+    //translationDB.button_create = button_create;
+    //translationDB.refresh = refresh;
+    //translationDB.button_search = button_search;
+    //translationDB.check_catalogue = check_catalogue;
+
+    translationDB = loadTranslationDB(fileTranslateEn, translationsList, translationDB.item_current);
 
     //std::cout << __FUNCTION__ << " finished" << "\n";
 
 }
 
+//////
 
 
-/////////////////////////////////////////////////////////////////// misc functions, used here only
 
-char* getFileNameOnly(char* fullName) {
-    //std::cout << __FUNCTION__ << "\n";
-
-    std::string convString;
-    std::string pathString = getPathExe();
-    
-    convString.assign(fullName);
-
-    int defPos = pathString.find(PROGRAM_NAME);
-    pathString.erase(defPos);
-    int pathLen = pathString.length();
-    //defPos = convString.find("example_win32_directx9.exe");
-    convString.erase(0, pathLen);
-    char* result = destr(convString);
-    //canShow = 1;
-    return result;
-}
-
-std::string getFileNameOnlyStr(char* fullName) {
-    std::string convString;
-    std::string pathString = getPathExe();
-    //std::cout << __FUNCTION__ << "\n";
-    convString.assign(fullName);
-
-    int defPos = pathString.find(PROGRAM_NAME);
-    pathString.erase(defPos);
-    int pathLen = pathString.length();
-    //defPos = convString.find("example_win32_directx9.exe");
-    convString.erase(0, pathLen);
-    std::string result = convString;
-    //canShow = 1;
-    return result;
-}
-
-char* getPathOnly() {
-    std::string pathString = getPathExe();
-    //std::cout << __FUNCTION__ << "\n";
-    
-    int defPos = pathString.find(PROGRAM_NAME);
-    pathString.erase(defPos);
-
-    char* result = destr(pathString);
-    //canShow = 1;
-    return result;
-}
-
-std::string getPathUser()
-{
-    std::string pathString = getPathExe();
-    //std::cout << __FUNCTION__ << "\n";
-
-    int defPos = pathString.find(PROGRAM_NAME);
-    pathString.erase(defPos);
-    pathString += "userdata\\";
-    return pathString;
-}
 
 /////////////////////////////////////////////////////////////////// UI: popup windows
 
@@ -219,6 +200,7 @@ void popElementEditSimple(libCardAssembly& Cards, int row_n) {
         char* filename = Cards.getCardElem(CNAME, row_n);
         ImGui::Text(destr(stringConvert(filename, CP_THREAD_ACP, 0, CP_UTF8, 0)));
         ImGui::Separator();
+
 
         ImGui::InputText(table_tags, editBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
 
@@ -262,12 +244,12 @@ void popElementEditDouble(libCardAssembly& Cards, int row_n) {
 
         ImGui::Text(create_info);
         //ImGui::Text("");
-        ImGui::InputText(" ", fileInfo1nNewBuff, 64);
+        ImGui::InputText(('#' + std::to_string(1) + " key").c_str(), fileInfo1nNewBuff, 64);
         ImGui::SameLine();
-        ImGui::InputText("  ", fileInfo1vNewBuff, 64);
-        ImGui::InputText("   ", fileInfo2nNewBuff, 64);
+        ImGui::InputText(('#' + std::to_string(1) + " val").c_str(), fileInfo1vNewBuff, 64);
+        ImGui::InputText(('#' + std::to_string(2) + " key").c_str(), fileInfo2nNewBuff, 64);
         ImGui::SameLine();
-        ImGui::InputText("    ", fileInfo2vNewBuff, 64);
+        ImGui::InputText(('#' + std::to_string(2) + " val").c_str(), fileInfo2vNewBuff, 64);
 
         if (ImGui::Button(popOK, ImVec2(120, 0))) {
 
@@ -580,7 +562,7 @@ void editInfoContext(libCardAssembly& Cards, int row_n) {
         std::string buttonInfoEditName = editInfo + funcGetIdxNameStr(nameOnlyStr, 0);
         if (ImGui::SmallButton(destr(buttonInfoEditName))) {
 
-            char* nameOnly = destr(nameOnlyStr);
+            //char* nameOnly = destr(nameOnlyStr);
             char* infoG = libCards[row_x].getInfoChar();
 
             editName = libCards[row_x].getName();
@@ -614,7 +596,7 @@ void editInfoContext(libCardAssembly& Cards, int row_n) {
                 memset(&(fileInfo2vNewBuff[0]), 0, 64);
                 tempMapSize = 2;
             }
-            tempNamePop = funcGetIdxName(nameOnly, 0);
+            //tempNamePop = funcGetIdxName(nameOnly, 0);
 
             ImGui::OpenPopup(editInfo);
         }
@@ -627,10 +609,9 @@ void editInfoContext(libCardAssembly& Cards, int row_n) {
 
 /////////////////////////////////////////////////////////////////// UI: tables
 
-void setTableClip(libCardAssembly& Cards) {
+void setTableClip(UIassembly& Cards) {
 
-    //std::vector<libCard>& libCards = Cards.getCards();
-    libUI& items = Cards.getUI();
+    libUI& items = Cards.getData().getUI();
     // Create item list
 
     const float TEXT_BASE_HEIGHT = ImGui::GetTextLineHeightWithSpacing();
@@ -705,7 +686,8 @@ void setTableClip(libCardAssembly& Cards) {
 
                 //if (ImGui::BeginPopup(items.Tags(row_n)))
                 //{
-                    editTagsContext(Cards, row_n);
+                    //editTagsContext(Cards.getData(), row_n);
+                Cards.editTagsContext(row_n);
                     //ImGui::EndPopup();
                 //}
 
@@ -716,7 +698,8 @@ void setTableClip(libCardAssembly& Cards) {
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
                     ImGui::OpenPopupContextItem(items.Info(row_n));
                 }              
-                editInfoContext(Cards, row_n);
+                //editInfoContext(Cards.getData(), row_n);
+                Cards.editInfoContext(row_n);
 
                 ImGui::TableNextColumn();
 
@@ -725,7 +708,7 @@ void setTableClip(libCardAssembly& Cards) {
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
                     ImGui::OpenPopupContextItem(name);
                 }
-                editPathContext(Cards, row_n);
+                editPathContext(Cards.getData(), row_n);
 
 
                 ImGui::PopID();
@@ -885,6 +868,18 @@ libCardAssembly setDataArrays1()
     std::cout << Cards.getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";
 
     return Cards;
+}
+
+UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList)
+{
+    std::vector<libCard> libCardsTemp;
+    funcValidFilesProcessClass(getPathUser(), libCardsTemp);
+    UIassembly uiCards = UIassembly(loadTranslationDB(fileTranslateEn, translationsList, 0), libCardAssembly(libCardsTemp));
+
+    std::cout << uiCards.getData().getCards()[0].getFind("--", "seri", "--", "--", "--") << "\n";
+    std::cout << uiCards.getData().getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";
+
+    return uiCards;
 }
 
 void setDataArraysItems(std::vector<libCard> libCards, ImVector<MyItem>& items)

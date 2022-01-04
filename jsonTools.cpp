@@ -9,6 +9,17 @@
 namespace fs = std::experimental::filesystem;
 bool isdebug;
 
+char* PROGRAM_NAME = _pgmptr;
+
+void copyChars2(char copy[64], char paste[64]) {
+    std::cout << __FUNCTION__ << " 1= \n " << copy << " \n " << paste << "\n";
+    memset(&copy[0], 0, sizeof(copy));
+    std::cout << __FUNCTION__ << " 2= \n " << copy << " \n " << paste << "\n";
+    //std::string tmp = paste;
+    strncpy(copy, paste, 64);
+    std::cout << __FUNCTION__ << " 3= \n " << copy << " \n " << paste << "\n";
+}
+
 
 char* wchar_to_char(const wchar_t* pwchar)
 {
@@ -638,6 +649,48 @@ int funcWriteJsonSimpleSubData(int buf, char* key[], char* value[], char*& filen
     return done;
 }
 
+int funcWriteJsonInfoClass(std::vector<char*> uiBuffers, char*& filename)
+{
+    int done = 0;
+
+
+    std::fstream fs;
+    Json::Value root;
+    //std::locale loc;
+    //loc = std::locale("en_US.UTF8");
+    //fs.imbue(std::locale("UTF8"));
+    fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
+    std::cout << "Opened " << "\n";
+    fs >> root;
+    std::cout << "Got root " << "\n";
+    char* name = _strdup(root.getMemberNames()[0].c_str());
+    std::cout << "Got name " << "\n";
+    fs.close();
+    std::cout << "Closed " << "\n";
+    fs.open(filename, std::fstream::in | std::ofstream::out | std::ofstream::trunc);
+    std::cout << "Cleared with " << fs.getloc().c_str() << "\n";
+
+    std::cout << "Adding " << uiBuffers[0] << ":" << uiBuffers[1] << " to " << name << "\n";
+    root[name].removeMember("info");
+
+    for (int i = 1; i < uiBuffers.size(); i+=2) {
+        if (uiBuffers[i][0] != '\0' && uiBuffers[i+1][0] != '\0') {
+            std::cout << i << " has " << uiBuffers[i] << ":" << uiBuffers[i+1] << "out of" << uiBuffers.size() << "\n";
+            char* key = uiBuffers[i];
+            root[name]["info"][key] = uiBuffers[i+1];
+        }
+        //Json::StyledWriter styledWriter;
+        //fs << styledWriter.write(root);
+
+    }
+    Json::StreamWriterBuilder builder;
+    builder["emitUTF8"] = true;
+    std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+    writer->write(root, &fs);
+
+    return done;
+}
+
 int funcWriteJsonSimpleSubDataStr(int buf, std::string key[], std::string value[], char*& filename)
 {
     int done = 0;
@@ -903,7 +956,7 @@ std::vector<std::map<std::string, std::string>> funcGetInfoPairs(char* filename)
             tmpMap["val"] = subPart1[key].asString();
             testName.push_back(tmpMap);
             //std::cout << tmpTags << " +Name " << "\n";
-            std::cout << key << " : " << tmpMap[key] << " Name:Value " << "\n";
+            std::cout << key << " : " << tmpMap["val"] << " Name:Value " << "\n";
         }
     }
 
@@ -1071,4 +1124,71 @@ char* funcAssembleFromMap(CharMap& charMap) {
     return destr(tmpStr);
 }
 
+
+/////////////////////////////////////////////////////////////////// misc functions, used here only
+
+std::string getPathExe()
+{
+    char myPath[_MAX_PATH + 1];
+    GetModuleFileNameA(NULL, myPath, _MAX_PATH);
+
+    return std::string(myPath);
+}
+
+char* getFileNameOnly(char* fullName) {
+    //std::cout << __FUNCTION__ << "\n";
+
+    std::string convString;
+    std::string pathString = getPathExe();
+
+    convString.assign(fullName);
+
+    int defPos = pathString.find(_pgmptr);
+    pathString.erase(defPos);
+    int pathLen = pathString.length();
+    //defPos = convString.find("example_win32_directx9.exe");
+    convString.erase(0, pathLen);
+    char* result = destr(convString);
+    //canShow = 1;
+    return result;
+}
+
+std::string getFileNameOnlyStr(char* fullName) {
+    std::string convString;
+    std::string pathString = getPathExe();
+    //std::cout << __FUNCTION__ << "\n";
+    convString.assign(fullName);
+
+    int defPos = pathString.find(_pgmptr);
+    pathString.erase(defPos);
+    int pathLen = pathString.length();
+    //defPos = convString.find("example_win32_directx9.exe");
+    convString.erase(0, pathLen);
+    std::string result = convString;
+    //canShow = 1;
+    return result;
+}
+
+char* getPathOnly() {
+    std::string pathString = getPathExe();
+    //std::cout << __FUNCTION__ << "\n";
+
+    int defPos = pathString.find(_pgmptr);
+    pathString.erase(defPos);
+
+    char* result = destr(pathString);
+    //canShow = 1;
+    return result;
+}
+
+std::string getPathUser()
+{
+    std::string pathString = getPathExe();
+    //std::cout << __FUNCTION__ << "\n";
+
+    int defPos = pathString.find(_pgmptr);
+    pathString.erase(defPos);
+    pathString += "userdata\\";
+    return pathString;
+}
 

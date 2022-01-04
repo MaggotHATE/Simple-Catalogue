@@ -40,12 +40,12 @@ void libUI::clearV() {
 }
 
 MyItem libUI::getAUI(int idx) {
-    std::cout << __FUNCTION__ << " size " << sizeof(_assemblyView[idx]) << "\n";
+    //std::cout << __FUNCTION__ << " size " << sizeof(_assemblyView[idx]) << "\n";
     return _assemblyView[idx];
 }
 
 int libUI::Size() {
-    std::cout << __FUNCTION__ << ": " << _assemblyView.Size << "\n";
+    //std::cout << __FUNCTION__ << ": " << _assemblyView.Size << "\n";
     return _assemblyView.Size;
 }
 

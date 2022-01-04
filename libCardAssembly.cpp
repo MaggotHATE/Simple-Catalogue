@@ -123,3 +123,7 @@ char* libCardAssembly::getCardElem(cardItem flag, int idx) {
 void libCardAssembly::clearC() {
     _assemblyOf.clear();
 }
+
+void libCardAssembly::clearV() {
+    _assemblyView.clearV();
+}

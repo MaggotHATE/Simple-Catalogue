@@ -4,6 +4,7 @@
 #include <array>
 #include "testTools.h"
 #include "libCardAssembly.h"
+#include "uiClass.h"
 #include "translateDB.h"
 
 
@@ -16,7 +17,7 @@
 
 
 
-void setTableClip(libCardAssembly& libCards);
+void setTableClip(UIassembly& libCards);
 void setTableClipItm(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 
 
@@ -30,18 +31,20 @@ int funcCloseFileOpened();
 //void setDataArrays();
 //void setDataArrays(std::vector<libCard>& libCards);
 libCardAssembly setDataArrays1();
+UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList);
+
 void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 //void updateDataArraysItems(std::vector<libCard> libCards, int n);
 //void updateDataArrays(std::vector<libCard>& libCards, int idx = -1, char* name = "NULL", char* tags = "NULL", char* path = "NULL", std::map<char*, char*> info = {{"NULL","RESULT"}});
-char* getFileNameOnly(char* fullName);
-std::string getFileNameOnlyStr(char* fullName);
+
+
 //void popPath(char buffName[64], char buffVal[64], char* filename);
 void popElementEditSimple(libCardAssembly& Cards, int row_n);
 void popElementEditDouble(libCardAssembly& Cards, int row_n);
 void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
 
-char* getPathOnly();
-std::string getPathUser();
+
+//std::string getPathUser();
 
 bool popCreate();
 void popSearch(libCardAssembly Cards);

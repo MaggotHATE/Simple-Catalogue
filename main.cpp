@@ -27,6 +27,7 @@ void ResetDevice();
 //std::vector<libCard> libCards;
 libCardAssembly Cards;
 translateDB langDB;
+UIassembly aUI;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -44,6 +45,7 @@ int main(int, char**, bool* p_open)
     isdebug = false;
 
     loadTranslation(fileTranslateEn, translationsList, langDB);
+    
 
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
@@ -117,6 +119,7 @@ int main(int, char**, bool* p_open)
     can_update = true;
 
     setDataArraysMap();
+    
 
     int numItems = namesList.size();
    // std::cout << "List numItems = " << numItems << "\n";
@@ -210,7 +213,7 @@ int main(int, char**, bool* p_open)
             {
                 if (ImGui::BeginTabItem(langDB.check_catalogue))
                 {
-                    setTableClip(Cards);
+                    setTableClip(aUI);
                     ImGui::EndTabItem();
                 }
                 if (isdebug == true) {
@@ -284,6 +287,7 @@ void setDataArraysMap()
 
     //setDataArrays(libCards);
     Cards = setDataArrays1();
+    aUI = setDataArrays2(fileTranslateEn, translationsList);
 
     std::cout << __FUNCTION__ << ": " << Cards.getUI().Name(0) << "\n";
     //std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";

@@ -21,7 +21,7 @@ public:
     char* getCardElem(cardItem flag, int idx);
 
     void clearC();
-    //void clearV();
+    void clearV();
 
     bool setACard(libCard aCard, int idx);
 
