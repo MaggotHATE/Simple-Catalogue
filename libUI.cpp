@@ -36,6 +36,12 @@ void libUI::setUp(std::vector<libCard>& assemblyOf_I)
 }
 
 void libUI::clearV() {
+    for (int i = 0; i < _assemblyView.size(); i++) {
+        delete(_assemblyView[i].Name);
+        delete(_assemblyView[i].Tags);
+        delete(_assemblyView[i].Path);
+        delete(_assemblyView[i].Info);
+    }
     _assemblyView.clear();
 }
 

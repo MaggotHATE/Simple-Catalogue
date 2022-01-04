@@ -160,6 +160,7 @@
     <ClCompile Include="libUI.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="uiClass.cpp" />
+    <ClCompile Include="uiCommons.cpp" />
     <ClCompile Include="x_deprecated.cpp" />
     <ClCompile Include="jsonTools.cpp" />
     <ClCompile Include="main.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="translateDB.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="uiClass.h" />
+    <ClInclude Include="uiCommons.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.txt" />

@@ -158,3 +158,10 @@ bool libCard::empty() {
     if (name_ || tags_ || path_) return false;
     return true;
 }
+
+void libCard::toDelete() {
+    delete(name_);
+    delete(tags_);
+    delete(path_);
+    info_.clear();
+}

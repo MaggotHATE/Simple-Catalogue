@@ -43,20 +43,8 @@ void UIassembly::clearData() {
 //void UIassembly::clearStrings() {
 //
 //}
-void UIassembly::clearBuffers() {
-    uiBuffers_.clear();
-}
 void UIassembly::clearGenerated() {
     uiGenerated_.clear();
-}
-
-void UIassembly::readyBuffers(int size) {
-    uiBuffers_.resize(size);
-    for (int i = 0; i < uiBuffers_.size(); i++) {
-        uiBuffers_[i] = new char[64];
-    }
-
-    std::cout << __FUNCTION__ << " to " << uiBuffers_.size() << "\n";
 }
 
 void UIassembly::popEditSimple(int row_n) {
@@ -101,15 +89,11 @@ void UIassembly::editTagsContext(int row_n) {
             int row_x = uiData_.getCardIdx(row_n);
             
             readyBuffers(1);
+
             uiBuffers_[0] = destr(uiData_.getCards()[row_x].getTags());
+            //std::cout << __FUNCTION__ << " readyBuffers " << "\n";
+            
 
-            //std::cout << "\n" << "AFTER " << ": " << Ttags << "; " << "\n";
-
-
-
-            //std::cout << "Button Tags = " << editName << " with " << Ttags << "; " << row_n << "\n";
-
-            //ImGui::CloseCurrentPopup();
             ImGui::OpenPopup(uiStrings_.editTags);
         }
 

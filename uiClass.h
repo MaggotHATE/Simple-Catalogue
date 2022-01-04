@@ -1,6 +1,7 @@
 #pragma once
 
 #include "libCardAssembly.h"
+#include "uiCommons.h"
 #include "translateDB.h"
 #include "imgUIsort.h"
 #include <tchar.h>
@@ -8,10 +9,9 @@
 #include <array>
 
 
-class UIassembly {
-private:
+class UIassembly: public UIcommons {
+protected:
     translateDB uiStrings_;
-    std::vector<char*> uiBuffers_;
     std::map<int, std::map<char*, std::string>> uiGenerated_;
     libCardAssembly uiData_;
 
@@ -32,9 +32,6 @@ public:
 
     void clearData();
     //void clearStrings();
-    void clearBuffers();
     void clearGenerated();
-
-    void readyBuffers(int size);
 
 };

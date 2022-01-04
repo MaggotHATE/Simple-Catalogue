@@ -121,6 +121,9 @@ char* libCardAssembly::getCardElem(cardItem flag, int idx) {
 ////////////////////////////// CLEARS
 
 void libCardAssembly::clearC() {
+    for (int i = 0; i < _assemblyOf.size(); i++) {
+        _assemblyOf[i].toDelete();
+    }
     _assemblyOf.clear();
 }
 

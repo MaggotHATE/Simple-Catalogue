@@ -30,6 +30,7 @@ public:
 
     char* getItem(cardItem flag, int idx);
 
+    void toDelete();
 private:
     char* name_;
     char* tags_;
