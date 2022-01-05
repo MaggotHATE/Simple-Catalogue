@@ -8,12 +8,16 @@
 #include <string>
 #include <array>
 
+using namespace my_item;
 
 class UIassembly: public UIcommons {
 protected:
     translateDB uiStrings_;
     std::map<int, std::map<char*, std::string>> uiGenerated_;
     libCardAssembly uiData_;
+    std::vector<libCard> searchCards;
+    ImVector<MyItem> searchItems;
+    //UIcommons searchBuffers;
 
 public:
     UIassembly() = default;
@@ -22,16 +26,25 @@ public:
     void loadTransl(translateDB _translations);
     void setData(libCardAssembly _data);
     libCardAssembly& getData();
+    translateDB& getStrings();
+    void SearchBuffers(int size);
+    void setStrings(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current);
     void setGenereated(int row_n);
 
     void popEditSimple(int row_n);
     void popEditDouble(int row_n);
+    void popSearch();
 
     void editTagsContext(int row_n);
     void editInfoContext(int row_n);
+    void editPathContext(int row_n);
+
+    void sortAndGenerate(int idx);
 
     void clearData();
     //void clearStrings();
     void clearGenerated();
+
+    void clear();
 
 };

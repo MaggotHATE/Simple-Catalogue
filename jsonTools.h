@@ -43,6 +43,7 @@ char* getFirstCategoryOnly(char* filename);
 char* funcParseJsonTest(char* category, char* windowX, int idx, char* filename = "translation_en.json");
 int exist(const char* name);
 int exist2(const char* name);
+bool existChar(char* item);
 bool is_file_exist(const char* fileName);
 char* funcGetTags(char* filename);
 char* funcGetInfo(char* filename);

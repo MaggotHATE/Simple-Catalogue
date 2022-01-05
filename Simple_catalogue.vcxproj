@@ -158,6 +158,7 @@
     <ClCompile Include="libCard.cpp" />
     <ClCompile Include="libCardAssembly.cpp" />
     <ClCompile Include="libUI.cpp" />
+    <ClCompile Include="translateDB.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="uiClass.cpp" />
     <ClCompile Include="uiCommons.cpp" />

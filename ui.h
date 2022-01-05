@@ -39,8 +39,8 @@ void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>
 
 
 //void popPath(char buffName[64], char buffVal[64], char* filename);
-void popElementEditSimple(libCardAssembly& Cards, int row_n);
-void popElementEditDouble(libCardAssembly& Cards, int row_n);
+//void popElementEditSimple(libCardAssembly& Cards, int row_n);
+//void popElementEditDouble(libCardAssembly& Cards, int row_n);
 void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
 
 

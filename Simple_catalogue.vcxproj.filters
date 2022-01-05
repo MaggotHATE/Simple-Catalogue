@@ -73,6 +73,9 @@
     <ClCompile Include="uiCommons.cpp">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="translateDB.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

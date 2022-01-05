@@ -735,6 +735,279 @@ void updateDataArraysItems(std::vector<libCard> libCards, int n)
 }
 
 
+//////////////////////////////////////// OLD UI
+
+
+
+
+
+
+void popElementEditSimple(libCardAssembly& Cards, int row_n) {
+    //std::vector<libCard> libCards = Cards.getCards();
+    //ImVector<MyItem> items = Cards.getUI();
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    //char* pathValue = "";
+
+    if (ImGui::BeginPopupModal(editTags, NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+
+        //int row_x = Cards.getCardIdx(row_n);
+        char* filename = Cards.getCardElem(CNAME, row_n);
+        ImGui::Text(destr(stringConvert(filename, CP_THREAD_ACP, 0, CP_UTF8, 0)));
+        ImGui::Separator();
+
+
+        ImGui::InputText(table_tags, editBuff, 64, ImGuiInputTextFlags_CharsNoBlank);
+
+        //std::cout << "PreTags = " << Cards.getUI()[row_x].Tags << " vs " << Cards.getCards()[Cards.getUI()[row_x].ID].getTags() << "\n";
+
+        if (ImGui::Button(popOK, ImVec2(120, 0))) {
+
+            funcWriteJson_tags(editBuff, filename);
+            //can_update = true;
+
+            //Cards.getCards()[row_x].setTags(editBuff);
+            //Cards.getUI()[row_n].Tags = Cards.getCards()[row_x].getTags();
+            Cards.setData(row_n, "--", editBuff);
+
+
+            //std::cout << "Tags = " << Cards.getUI()[row_x].Tags << " vs " << Cards.getCards()[row_x].getTags() << " FROM " << editBuff << "\n";
+
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SetItemDefaultFocus();
+        ImGui::SameLine();
+        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::EndPopup();
+    }
+}
+
+void popElementEditDouble(libCardAssembly& Cards, int row_n) {
+    std::vector<libCard> libCards = Cards.getCards();
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    //char* pathValue = "";
+
+    if (ImGui::BeginPopupModal(editInfo, NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+
+        char* filename = Cards.getCardElem(CNAME, row_n);
+        ImGui::Text(filename);
+        ImGui::Separator();
+
+
+        ImGui::Text(create_info);
+        //ImGui::Text("");
+        ImGui::InputText(('#' + std::to_string(1) + " key").c_str(), fileInfo1nNewBuff, 64);
+        ImGui::SameLine();
+        ImGui::InputText(('#' + std::to_string(1) + " val").c_str(), fileInfo1vNewBuff, 64);
+        ImGui::InputText(('#' + std::to_string(2) + " key").c_str(), fileInfo2nNewBuff, 64);
+        ImGui::SameLine();
+        ImGui::InputText(('#' + std::to_string(2) + " val").c_str(), fileInfo2vNewBuff, 64);
+
+        if (ImGui::Button(popOK, ImVec2(120, 0))) {
+
+            char* name[2];
+            char* value[2];
+            int numBuff = 1;
+            name[0] = destr(fileInfo1nNewBuff);
+            value[0] = destr(fileInfo1vNewBuff);
+
+
+            if (fileInfo2nNewBuff[0] != '\0' && fileInfo2vNewBuff[0] != '\0') {
+                numBuff = 2;
+                name[1] = destr(fileInfo2nNewBuff);
+                value[1] = destr(fileInfo2vNewBuff);
+            }
+            //std::cout << numBuff << " funcWriteJsonSimpleSubData val[1] = " << destr(fileInfo2vNewBuff) << "\n";
+            funcWriteJsonSimpleSubData(numBuff, name, value, filename);
+            std::map<char*, char*> infoMapG = funcGetInfoMap(filename);
+
+            //Cards.getCards()[row_x].setInfo(infoMapG);
+            //Cards.getUI()[row_n].Info = funcAssembleFromMap(Cards.getCards()[row_x].getInfo());
+
+            Cards.setData(row_n, "--", "--","--", infoMapG);
+
+            //std::cout << "Path = " << Cards.getUI()[row_x].Info << " vs " << funcAssembleFromMap(Cards.getCards()[row_x].getInfo()) << "; " << row_n << "\n";
+            //can_update = true;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SetItemDefaultFocus();
+        ImGui::SameLine();
+        if (ImGui::Button(popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::EndPopup();
+    }
+
+}
+
+
+/////////////////////////////////////////////////////////////////// UI: context menus (tags and info use popups to keep editing popups working)
+/////////////////////////////////////////////////////////////////// needs more work
+
+void editPathContext(libCardAssembly& Cards, int row_n) {
+    std::vector<libCard> libCards = Cards.getCards();
+    libUI items = Cards.getUI();
+
+    if (ImGui::BeginPopup(items.getAUI(row_n).Name))
+    {
+        //MyItem* item = &items[row_n];
+
+        std::string buttonOpenFile = open_num + std::to_string(row_n);
+        //ImGui::SmallButton(destr(buttonOpenFile));
+        if (ImGui::Selectable(destr(buttonOpenFile))) {
+
+            int row_x = Cards.getCardIdx(row_n);
+           // std::cout << "path = " << item->Path << "; " << row_n << "\n";
+            std::cout << "path1 = " << funcGetDataPathNew(getFileNameOnly(Cards.getCards()[row_x].getName())) << "\n";
+
+            ShellExecuteA(NULL, "open", destr(stringConvert(Cards.getCards()[row_x].getPath(), CP_UTF8, 0, CP_THREAD_ACP, 0)), NULL, NULL, SW_SHOWDEFAULT);
+            ImGui::CloseCurrentPopup();
+        }
+        //ImGui::SameLine();
+        std::string buttonOpenPath = open_folder_num + std::to_string(row_n);
+        if (ImGui::Selectable(destr(buttonOpenPath))) {
+
+
+            int row_x = Cards.getCardIdx(row_n);
+            char* value2 = destr(stringConvert(filePathFull(Cards.getCards()[row_x].getPath()), CP_UTF8, 0, CP_THREAD_ACP, 0));
+
+            openFileFolder(value2);
+
+            ImGui::CloseCurrentPopup();
+        }
+        //ImGui::SameLine();
+        std::string buttonPath = edit_path_num + std::to_string(row_n);
+
+        if (ImGui::Selectable(destr(buttonPath))) {
+
+
+            int row_x = Cards.getCardIdx(row_n);
+            std::cout << "\n BEGIN Path = " << Cards.getUI().getAUI(row_x).Path << " vs " << Cards.getCards()[row_x].getPath() << "; " << row_n << "\n";
+
+
+            char* newPath = winOpenAndProcessFl(Cards.getCards()[row_x].getName());
+
+            if (newPath != "NULL") {
+
+                //Cards.getCards()[row_x].setPath(newPath);
+                //Cards.getUI()[row_n].Path = Cards.getCards()[row_x].getPath();
+
+                Cards.setData(row_n, "--", "--", newPath);
+
+                std::cout << "Path = " << Cards.getUI().getAUI(row_x).Path << " vs " << Cards.getCards()[row_x].getPath() << "; " << row_n << "\n";
+                ImGui::CloseCurrentPopup();
+            }
+
+
+        }
+        ImGui::EndPopup();
+    }
+
+}
+
+void editTagsContext(libCardAssembly& Cards, int row_n) {
+
+
+
+    if (ImGui::BeginPopup(Cards.getUI().Tags(row_n))) {
+
+
+
+        char* tempName = Cards.getCards()[Cards.getCardIdx(row_n)].getName();
+        std::string nameOnlyStr = getFileNameOnly(tempName);
+        std::string buttonEditName = editTags + funcGetIdxNameStr(nameOnlyStr, 0);
+        //std::cout << "\n" << "BEFORE " << ": " << row_n << "; " << tempName << "\n";
+
+        if (ImGui::SmallButton(destr(buttonEditName))) {
+
+            int row_x = Cards.getCardIdx(row_n);
+            editName = Cards.getCards()[row_x].getName();
+            char* Ttags = Cards.getCards()[row_x].getTags();
+
+            //std::cout << "\n" << "AFTER " << ": " << Ttags << "; " << "\n";
+            copyChars2(editBuff, Ttags);
+
+
+
+            //std::cout << "Button Tags = " << editName << " with " << Ttags << "; " << row_n << "\n";
+
+            //ImGui::CloseCurrentPopup();
+            ImGui::OpenPopup(editTags);
+        }
+
+        popElementEditSimple(Cards, row_n);
+
+        ImGui::EndPopup();
+   }
+}
+
+void editInfoContext(libCardAssembly& Cards, int row_n) {
+
+
+    std::vector<libCard> libCards = Cards.getCards();
+    libUI items = Cards.getUI();
+
+    if (ImGui::BeginPopup(items.getAUI(row_n).Info))
+    {
+
+        int row_x = Cards.getCardIdx(row_n);
+        //MyItem* item = &items[row_n];
+
+        char* tempName = libCards[row_x].getName();
+
+        std::string nameOnlyStr = getFileNameOnly(tempName);
+
+
+        std::string buttonInfoEditName = editInfo + funcGetIdxNameStr(nameOnlyStr, 0);
+        if (ImGui::SmallButton(destr(buttonInfoEditName))) {
+
+            //char* nameOnly = destr(nameOnlyStr);
+            char* infoG = libCards[row_x].getInfoChar();
+
+            editName = libCards[row_x].getName();
+
+            if (infoG != "") {
+                std::vector<std::map<std::string, std::string>> tempMap = funcGetInfoPairs(libCards[row_x].getName());
+
+                tempMapSize = tempMap.size();
+                std::cout << "tempMapSize = " << tempMapSize << "\n";
+
+                if (tempMapSize == 1) {
+                    std::cout << "case 1" << "\n";
+                    copyChars2(fileInfo1nNewBuff, destr(tempMap[0]["key"]));
+                    copyChars2(fileInfo1vNewBuff, destr(tempMap[0]["val"]));
+                    memset(&(fileInfo2nNewBuff[0]), 0, 64);
+                    memset(&(fileInfo2vNewBuff[0]), 0, 64);
+                }
+                else {
+                    std::cout << "case 2" << "\n";
+                    copyChars2(fileInfo1nNewBuff, destr(tempMap[0]["key"]));
+                    copyChars2(fileInfo1vNewBuff, destr(tempMap[0]["val"]));
+                    copyChars2(fileInfo2nNewBuff, destr(tempMap[1]["key"]));
+                    copyChars2(fileInfo2vNewBuff, destr(tempMap[1]["val"]));
+                }
+            }
+            else
+            {
+                memset(&(fileInfo1nNewBuff[0]), 0, 64);
+                memset(&(fileInfo1vNewBuff[0]), 0, 64);
+                memset(&(fileInfo2nNewBuff[0]), 0, 64);
+                memset(&(fileInfo2vNewBuff[0]), 0, 64);
+                tempMapSize = 2;
+            }
+            //tempNamePop = funcGetIdxName(nameOnly, 0);
+
+            ImGui::OpenPopup(editInfo);
+        }
+
+        popElementEditDouble(Cards, row_n);
+
+        ImGui::EndPopup();
+    }
+}
 
 
 

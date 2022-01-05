@@ -124,6 +124,8 @@ void libCardAssembly::clearC() {
     for (int i = 0; i < _assemblyOf.size(); i++) {
         _assemblyOf[i].toDelete();
     }
+    std::cout << __FUNCTION__ << " deleted " << _assemblyOf.size() << "\n";
+    
     _assemblyOf.clear();
 }
 

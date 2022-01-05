@@ -1,8 +1,13 @@
 #pragma once
 #include <string>
+#include <vector>
+
 
 class translateDB {
 public:
+    translateDB() = default;
+    translateDB(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current);
+
     char* name_app;
     char* intro;
     char* button_create;
@@ -35,4 +40,6 @@ public:
     char* popOK;
     char* popBACK;
     int item_current = 0;
+
+    
 };

@@ -373,6 +373,10 @@ int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards)
         }
     }
 
+    //delete(nameG);
+    //delete(tagsG);
+    //delete(pathG);
+
     //std::cout << " NAMES CHECK " << names[0] << "\n";
 
     return status;

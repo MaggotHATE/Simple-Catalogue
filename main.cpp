@@ -25,7 +25,7 @@ void CleanupDeviceD3D();
 void ResetDevice();
 
 //std::vector<libCard> libCards;
-libCardAssembly Cards;
+//libCardAssembly Cards;
 translateDB langDB;
 UIassembly aUI;
 
@@ -44,6 +44,9 @@ int main(int, char**, bool* p_open)
 
     isdebug = false;
 
+    can_update = true;
+    //aUI.setStrings(fileTranslateEn, translationsList, 0);
+    setDataArraysMap();
     loadTranslation(fileTranslateEn, translationsList, langDB);
     
 
@@ -116,9 +119,7 @@ int main(int, char**, bool* p_open)
 
     
 
-    can_update = true;
 
-    setDataArraysMap();
     
 
     int numItems = namesList.size();
@@ -174,44 +175,47 @@ int main(int, char**, bool* p_open)
             
 
 
-            const char* combo_preview_value = translationsList.data()[langDB.item_current];
+            const char* combo_preview_value = translationsList.data()[aUI.getStrings().item_current];
             if (ImGui::BeginCombo(langSwitch, combo_preview_value, 0))
             {
                 for (int n = 0; n < translationsList.size(); n++)
                 {
-                    const bool is_selected = (langDB.item_current == n);
+                    const bool is_selected = (aUI.getStrings().item_current == n);
 
                     if (ImGui::Selectable(translationsList.data()[n], is_selected)) {
-                        langDB.item_current = n;
-                        loadTranslation(fileTranslateEn, translationsList, langDB);
+                        //aUI.getStrings().item_current = n;
+                        aUI.setStrings(fileTranslateEn, translationsList, n);
+                        //loadTranslation(fileTranslateEn, translationsList, aUI.getStrings());
                     }
                     // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
                     if (is_selected) {
-                        loadTranslation(fileTranslateEn, translationsList, langDB);
+                        aUI.setStrings(fileTranslateEn, translationsList, aUI.getStrings().item_current);
+                        //loadTranslation(fileTranslateEn, translationsList, aUI.getStrings());
                         ImGui::SetItemDefaultFocus();
                     }
                 }
                 ImGui::EndCombo();
             }
-            ImGui::TextWrapped(langDB.intro);
+            ImGui::TextWrapped(aUI.getStrings().intro);
 
             ImGui::TextWrapped("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            if (ImGui::Button(langDB.button_create))
-                ImGui::OpenPopup(langDB.button_create);
+            if (ImGui::Button(aUI.getStrings().button_create))
+                ImGui::OpenPopup(aUI.getStrings().button_create);
 
             ImGui::SameLine();
-            if (ImGui::Button(langDB.refresh))
+            if (ImGui::Button(aUI.getStrings().refresh))
                 can_update = true;
             ImGui::SameLine();
-            if (ImGui::Button(langDB.button_search)) {
-                ImGui::OpenPopup(langDB.button_search);
+            if (ImGui::Button(aUI.getStrings().button_search)) {
+                aUI.SearchBuffers(5);
+                ImGui::OpenPopup(aUI.getStrings().button_search);
             }
 
             // TABS
             ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_TabListPopupButton | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton | ImGuiTabBarFlags_FittingPolicyResizeDown;
             if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
             {
-                if (ImGui::BeginTabItem(langDB.check_catalogue))
+                if (ImGui::BeginTabItem(aUI.getStrings().check_catalogue))
                 {
                     setTableClip(aUI);
                     ImGui::EndTabItem();
@@ -237,7 +241,9 @@ int main(int, char**, bool* p_open)
             if (popCreate() == true) {
                 can_update = true;
             }
-            popSearch(Cards);
+            //popSearch(aUI.getData());
+
+            aUI.popSearch();
 
             ImGui::End();
         }
@@ -286,10 +292,12 @@ void setDataArraysMap()
 
 
     //setDataArrays(libCards);
-    Cards = setDataArrays1();
+    //Cards = setDataArrays1();
+
+    aUI.clear();
     aUI = setDataArrays2(fileTranslateEn, translationsList);
 
-    std::cout << __FUNCTION__ << ": " << Cards.getUI().Name(0) << "\n";
+    std::cout << __FUNCTION__ << ": " << aUI.getStrings().name_app << "\n";
     //std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
     //setDataArraysItems(libCards);
     can_update = false;

@@ -182,6 +182,10 @@ int exist2(const char* name)
     return (stat(nameuserFld, &buffer) == 0);
 }
 
+bool existChar(char* item) {
+    if (item != "" && item[0] != '\0') return false; else return true;
+}
+
 char* destr(const std::string s) {
     if (!s.empty()) {
         return _strdup(s.c_str());
@@ -673,7 +677,7 @@ int funcWriteJsonInfoClass(std::vector<char*> uiBuffers, char*& filename)
     std::cout << "Adding " << uiBuffers[0] << ":" << uiBuffers[1] << " to " << name << "\n";
     root[name].removeMember("info");
 
-    for (int i = 1; i < uiBuffers.size(); i+=2) {
+    for (int i = 0; i < uiBuffers.size(); i+=2) {
         if (uiBuffers[i][0] != '\0' && uiBuffers[i+1][0] != '\0') {
             std::cout << i << " has " << uiBuffers[i] << ":" << uiBuffers[i+1] << "out of" << uiBuffers.size() << "\n";
             char* key = uiBuffers[i];
