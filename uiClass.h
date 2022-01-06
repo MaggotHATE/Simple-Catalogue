@@ -18,7 +18,6 @@ protected:
     std::vector<libCard> searchCards;
     ImVector<MyItem> searchItems;
     //UIcommons searchBuffers;
-
 public:
     UIassembly() = default;
     UIassembly(translateDB _translations, libCardAssembly _data);
@@ -27,17 +26,18 @@ public:
     void setData(libCardAssembly _data);
     libCardAssembly& getData();
     translateDB& getStrings();
-    void SearchBuffers(int size);
+    std::string getGenerated(int row_n, char* stringName);
+    //void SearchBuffers(int size);
     void setStrings(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current);
     void setGenereated(int row_n);
 
-    void popEditSimple(int row_n);
-    void popEditDouble(int row_n);
-    void popSearch();
+    //void popEditSimple(int row_n);
+    //void popEditDouble(int row_n);
+    //void popSearch();
 
-    void editTagsContext(int row_n);
-    void editInfoContext(int row_n);
-    void editPathContext(int row_n);
+    //void editTagsContext(int row_n);
+    //void editInfoContext(int row_n);
+    //void editPathContext(int row_n);
 
     void sortAndGenerate(int idx);
 

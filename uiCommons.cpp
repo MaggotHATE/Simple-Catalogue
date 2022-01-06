@@ -17,6 +17,7 @@ void UIcommons::readyBuffers(int size) {
     uiBuffers_.resize(size);
     for (int i = 0; i < uiBuffers_.size(); i++) {
         uiBuffers_[i] = new char[64];
+        std::cout << __FUNCTION__ << " = " << strlen(uiBuffers_[i]) << "\n";
     }
 
     std::cout << __FUNCTION__ << " to " << uiBuffers_.size() << "\n";

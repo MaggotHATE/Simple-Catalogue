@@ -1,0 +1,22 @@
+#pragma once
+#include <tchar.h>
+#include <vector>
+#include "uiClass.h"
+#include "uiSingleEdit.h"
+#include "uiDoubleEdit.h"
+#include "uiEditPath.h"
+#include "uiSearch.h"
+
+
+class UItable {
+protected:
+    UIeditSingle tagUI;
+    UIeditDouble infoUI;
+    UIsearch searchUI;
+    UIeditPath pathUI;
+public:
+    void setTableClip(UIassembly& Cards);
+    void setGenerated(std::string buttonEditName, std::string buttonInfoEditName, int row_n);
+    void popSearch(UIassembly& Cards);
+    void SearchBuffers(int size);
+};

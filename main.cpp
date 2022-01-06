@@ -28,6 +28,7 @@ void ResetDevice();
 //libCardAssembly Cards;
 translateDB langDB;
 UIassembly aUI;
+UItable table;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -77,8 +78,8 @@ int main(int, char**, bool* p_open)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
     // Setup Dear ImGui style
     //ImGui::StyleColorsDark();
@@ -207,7 +208,7 @@ int main(int, char**, bool* p_open)
                 can_update = true;
             ImGui::SameLine();
             if (ImGui::Button(aUI.getStrings().button_search)) {
-                aUI.SearchBuffers(5);
+                table.SearchBuffers(5);
                 ImGui::OpenPopup(aUI.getStrings().button_search);
             }
 
@@ -217,7 +218,8 @@ int main(int, char**, bool* p_open)
             {
                 if (ImGui::BeginTabItem(aUI.getStrings().check_catalogue))
                 {
-                    setTableClip(aUI);
+                    
+                    table.setTableClip(aUI);
                     ImGui::EndTabItem();
                 }
                 if (isdebug == true) {
@@ -243,7 +245,7 @@ int main(int, char**, bool* p_open)
             }
             //popSearch(aUI.getData());
 
-            aUI.popSearch();
+            table.popSearch(aUI);
 
             ImGui::End();
         }

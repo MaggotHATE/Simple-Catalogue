@@ -4,7 +4,7 @@
 #include <array>
 #include "testTools.h"
 #include "libCardAssembly.h"
-#include "uiClass.h"
+#include "uiTable.h"
 #include "translateDB.h"
 
 
@@ -17,7 +17,7 @@
 
 
 
-void setTableClip(UIassembly& libCards);
+//void setTableClip(UIassembly& libCards);
 void setTableClipItm(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 
 
@@ -47,7 +47,7 @@ void loadTranslation(std::string fileTranslateEn, std::vector<char*> translation
 //std::string getPathUser();
 
 bool popCreate();
-void popSearch(libCardAssembly Cards);
+//void popSearch(libCardAssembly Cards);
 
 void clearBuffers();
 /*

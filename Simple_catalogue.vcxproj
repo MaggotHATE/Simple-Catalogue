@@ -162,6 +162,11 @@
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="uiClass.cpp" />
     <ClCompile Include="uiCommons.cpp" />
+    <ClCompile Include="uiDoubleEdit.cpp" />
+    <ClCompile Include="uiEditPath.cpp" />
+    <ClCompile Include="uiSearch.cpp" />
+    <ClCompile Include="uiSingleEdit.cpp" />
+    <ClCompile Include="uiTable.cpp" />
     <ClCompile Include="x_deprecated.cpp" />
     <ClCompile Include="jsonTools.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,6 +193,11 @@
     <ClInclude Include="ui.h" />
     <ClInclude Include="uiClass.h" />
     <ClInclude Include="uiCommons.h" />
+    <ClInclude Include="uiDoubleEdit.h" />
+    <ClInclude Include="uiEditPath.h" />
+    <ClInclude Include="uiSearch.h" />
+    <ClInclude Include="uiSingleEdit.h" />
+    <ClInclude Include="uiTable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.txt" />

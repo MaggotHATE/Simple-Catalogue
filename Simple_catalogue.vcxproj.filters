@@ -76,6 +76,21 @@
     <ClCompile Include="translateDB.cpp">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="uiTable.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="uiSingleEdit.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="uiDoubleEdit.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="uiSearch.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="uiEditPath.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -131,6 +146,21 @@
       <Filter>sources</Filter>
     </ClInclude>
     <ClInclude Include="uiCommons.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiTable.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiSingleEdit.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiDoubleEdit.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiSearch.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="uiEditPath.h">
       <Filter>sources</Filter>
     </ClInclude>
   </ItemGroup>
