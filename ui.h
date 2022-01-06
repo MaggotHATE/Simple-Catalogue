@@ -18,7 +18,7 @@
 
 
 //void setTableClip(UIassembly& libCards);
-void setTableClipItm(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
+//void setTableClipItm(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 
 
 int funcCloseFileOpened();
@@ -41,12 +41,12 @@ void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>
 //void popPath(char buffName[64], char buffVal[64], char* filename);
 //void popElementEditSimple(libCardAssembly& Cards, int row_n);
 //void popElementEditDouble(libCardAssembly& Cards, int row_n);
-void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
+//void loadTranslation(std::string fileTranslateEn, std::vector<char*> translationsList, translateDB& translationDB);
 
 
 //std::string getPathUser();
 
-bool popCreate();
+bool popCreate(UIassembly Cards);
 //void popSearch(libCardAssembly Cards);
 
 void clearBuffers();

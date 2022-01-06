@@ -26,7 +26,7 @@ void ResetDevice();
 
 //std::vector<libCard> libCards;
 //libCardAssembly Cards;
-translateDB langDB;
+//translateDB langDB;
 UIassembly aUI;
 UItable table;
 
@@ -48,12 +48,12 @@ int main(int, char**, bool* p_open)
     can_update = true;
     //aUI.setStrings(fileTranslateEn, translationsList, 0);
     setDataArraysMap();
-    loadTranslation(fileTranslateEn, translationsList, langDB);
+    //loadTranslation(fileTranslateEn, translationsList, langDB);
     
 
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
-    char* name_app = langDB.name_app;
+    char* name_app = aUI.getStrings().name_app;
     //std::cout << __FUNCTION__ << " " << name_app << "\n";
     LPWSTR name_appL = new wchar_t[strlen(name_app) + 1];
     mbstowcs(name_appL, name_app, strlen(name_app) + 1);
@@ -171,7 +171,7 @@ int main(int, char**, bool* p_open)
             ImGui::SetNextWindowSize({ io.DisplaySize.x, io.DisplaySize.y });
             ImGui::SetNextWindowPos({0,0});
 
-            ImGui::Begin(langDB.name_app,p_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin(aUI.getStrings().name_app,p_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
 
             
 
@@ -240,7 +240,7 @@ int main(int, char**, bool* p_open)
             //    //updateDataArrays(libCards, need_update);
             //}
             ///////////////////////// POPUP
-            if (popCreate() == true) {
+            if (popCreate(aUI) == true) {
                 can_update = true;
             }
             //popSearch(aUI.getData());
