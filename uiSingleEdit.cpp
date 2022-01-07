@@ -40,7 +40,7 @@ void UIeditSingle::popEditSimple(libCardAssembly& uiData_, int row_n) {
     }
 }
 
-void UIeditSingle::editTagsContext(libCardAssembly& uiData_, int row_n) {
+void UIeditSingle::editTagsContext(libCardAssembly& uiData_, int row_n, char* buttonEditName) {
 
     if (ImGui::BeginPopup(uiData_.getUI().Tags(row_n))) {
 

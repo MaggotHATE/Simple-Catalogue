@@ -13,7 +13,7 @@ using namespace my_item;
 class UIassembly: public UIcommons {
 protected:
     translateDB uiStrings_;
-    std::map<int, std::map<char*, std::string>> uiGenerated_;
+    std::map<int, std::map<std::string, char*>> uiGenerated_;
     libCardAssembly uiData_;
     std::vector<libCard> searchCards;
     ImVector<MyItem> searchItems;
@@ -26,7 +26,7 @@ public:
     void setData(libCardAssembly _data);
     libCardAssembly& getData();
     translateDB& getStrings();
-    std::string getGenerated(int row_n, char* stringName);
+    char* getGenerated(int row_n, char* stringName);
     //void SearchBuffers(int size);
     void setStrings(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current);
     void setGenereated(int row_n);

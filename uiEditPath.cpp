@@ -4,14 +4,14 @@
 #include "uiEditPath.h"
 #include "testTools.h"
 
-void UIeditPath::editPathContext(libCardAssembly& uiData_, int row_n) {
+void UIeditPath::editPathContext(libCardAssembly& uiData_, int row_n, std::map<std::string, char*> buttonsNames) {
 
     if (ImGui::BeginPopup(uiData_.getCardElem(CNAME, row_n)))
     {
         //MyItem* item = &items[row_n];
 
 
-        if (ImGui::Selectable(buttonOpenFile)) {
+        if (ImGui::Selectable(buttonsNames["buttonOpenFile"])) {
 
             int row_x = uiData_.getCardIdx(row_n);
 
@@ -21,7 +21,7 @@ void UIeditPath::editPathContext(libCardAssembly& uiData_, int row_n) {
             ImGui::CloseCurrentPopup();
         }
 
-        if (ImGui::Selectable(buttonOpenPath)) {
+        if (ImGui::Selectable(buttonsNames["buttonOpenPath"])) {
 
 
             int row_x = uiData_.getCardIdx(row_n);
@@ -34,7 +34,7 @@ void UIeditPath::editPathContext(libCardAssembly& uiData_, int row_n) {
         //ImGui::SameLine();
 
 
-        if (ImGui::Selectable(buttonPath)) {
+        if (ImGui::Selectable(buttonsNames["buttonPath"])) {
 
 
             int row_x = uiData_.getCardIdx(row_n);

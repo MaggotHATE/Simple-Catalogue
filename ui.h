@@ -30,10 +30,10 @@ int funcCloseFileOpened();
 
 //void setDataArrays();
 //void setDataArrays(std::vector<libCard>& libCards);
-libCardAssembly setDataArrays1();
-UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList);
+//libCardAssembly setDataArrays1();
+UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList, int idx);
 
-void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
+//void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 //void updateDataArraysItems(std::vector<libCard> libCards, int n);
 //void updateDataArrays(std::vector<libCard>& libCards, int idx = -1, char* name = "NULL", char* tags = "NULL", char* path = "NULL", std::map<char*, char*> info = {{"NULL","RESULT"}});
 

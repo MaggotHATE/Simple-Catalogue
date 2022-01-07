@@ -64,7 +64,7 @@ void openFile(char* filename, char* path)
     ShellExecuteA(NULL, "open", complPath, NULL, NULL, SW_SHOWDEFAULT);
 }
 
-void openFile1(char* path)
+void openFile1(char*& path)
 {
  
     ShellExecuteA(NULL, "open", path, NULL, NULL, SW_SHOWDEFAULT);

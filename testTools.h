@@ -13,7 +13,7 @@ char* WINAPI winOpenFl();
 //wchar_t* WINAPI winOpenFlw();
 char* WINAPI winOpenAndProcessFl(char* filename);
 void openFileFolder(const std::string& path);
-void openFile1(char* path);
+void openFile1(char*& path);
 void openFile1W(wchar_t* path);
 void openFileFolderW(wchar_t* path);
 void copyChars(char copy[64], char paste[64]);

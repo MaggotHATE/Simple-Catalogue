@@ -238,13 +238,13 @@ bool popCreate(UIassembly Cards) {
 //    return Cards;
 //}
 
-UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList)
+UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList, int idx)
 {
     std::cout << __FUNCTION__ << "\n";
 
     std::vector<libCard> libCardsTemp;
     funcValidFilesProcessClass(getPathUser(), libCardsTemp);
-    UIassembly uiCards = UIassembly(loadTranslationDB(fileTranslateEn, translationsList, 0), libCardAssembly(libCardsTemp));
+    UIassembly uiCards = UIassembly(translateDB(fileTranslateEn, translationsList, idx), libCardAssembly(libCardsTemp));
 
     std::cout << uiCards.getData().getCards()[0].getFind("--", "seri", "--", "--", "--") << "\n";
     std::cout << uiCards.getData().getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";

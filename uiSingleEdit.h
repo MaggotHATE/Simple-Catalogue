@@ -11,7 +11,7 @@
 class UIeditSingle : public UIcommons {
 public:
     translateDB uiStrings_;
-    char* buttonEditName;
-    void editTagsContext(libCardAssembly& uiData_, int row_n);
+    //char* buttonEditName;
+    void editTagsContext(libCardAssembly& uiData_, int row_n, char* buttonEditName);
     void popEditSimple(libCardAssembly& uiData_, int row_n);
 };

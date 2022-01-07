@@ -59,7 +59,7 @@ void UIeditDouble::popEditDouble(libCardAssembly& uiData_, int row_n) {
 
 }
 
-void UIeditDouble::editInfoContext(libCardAssembly& uiData_, int row_n) {
+void UIeditDouble::editInfoContext(libCardAssembly& uiData_, int row_n, char* buttonInfoEditName) {
 
 
     if (ImGui::BeginPopup(uiData_.getUI().getAUI(row_n).Info))

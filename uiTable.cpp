@@ -4,8 +4,8 @@
 #include "testTools.h"
 
 void UItable::setGenerated(std::string buttonEditName, std::string buttonInfoEditName, int row_n) {
-    tagUI.buttonEditName = destr(buttonEditName);
-    infoUI.buttonInfoEditName = destr(buttonInfoEditName);
+    //tagUI.buttonEditName = destr(buttonEditName);
+    //infoUI.buttonInfoEditName = destr(buttonInfoEditName);
 }
 
 void UItable::popSearch(UIassembly& Cards) {
@@ -14,6 +14,23 @@ void UItable::popSearch(UIassembly& Cards) {
 
 void UItable::SearchBuffers(int size) {
     searchUI.SearchBuffers(size);
+}
+
+void UItable::sortAndGenerate(UIassembly& Cards, int idx) {
+    Cards.getData().getUI().sortUI(idx);
+
+    for (int i = 0; i < Cards.getData().getCards().size(); i++) {
+        Cards.setGenereated(i);
+        char* name = Cards.getData().getUI().Name(i);
+        names_.push_back(funcGetIdxName(name, 0));
+        //delete(name);
+        //strings_["buttonEditName"] = destr(Cards.getGenerated(i, "buttonEditName"));
+        //strings_["buttonInfoEditName"] = destr(Cards.getGenerated(i, "buttonInfoEditName"));
+        //strings_["buttonOpenFile"] = destr(Cards.getGenerated(i, "buttonOpenFile"));
+        //strings_["buttonOpenPath"] = destr(Cards.getGenerated(i, "buttonOpenPath"));
+        //strings_["buttonPath"] = destr(Cards.getGenerated(i, "buttonPath"));
+
+    }
 }
 
 void UItable::setTableClip(UIassembly& Cards) {
@@ -62,7 +79,7 @@ void UItable::setTableClip(UIassembly& Cards) {
 
                 //std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
 
-                if (size > 1) Cards.sortAndGenerate(0);
+                if (size > 1) sortAndGenerate(Cards, 0);
                 // items.sortUI(0);
                 //qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
 
@@ -74,7 +91,7 @@ void UItable::setTableClip(UIassembly& Cards) {
         // Demonstrate using clipper for large vertical lists
         ImGuiListClipper clipper;
         clipper.Begin(items.Size());
-
+        //char* name = "";
         while (clipper.Step())
             for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
             {
@@ -86,8 +103,8 @@ void UItable::setTableClip(UIassembly& Cards) {
                 ImGui::Text("%04d", items.ID(row_n));
                 ImGui::TableNextColumn();
 
-                char* name = items.Name(row_n);
-                if (ImGui::Button(funcGetIdxName(name, 0))) openFile1(name);
+                //name = items.Name(row_n);
+                if (ImGui::Button(names_[row_n])) openFile1(names_[row_n]);
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items.Tags(row_n));
@@ -100,8 +117,8 @@ void UItable::setTableClip(UIassembly& Cards) {
                 //if (ImGui::BeginPopup(items.Tags(row_n)))
                 //{
                     //editTagsContext(Cards.getData(), row_n);
-                tagUI.buttonEditName = destr(Cards.getGenerated(row_n, "buttonEditName"));
-                tagUI.editTagsContext(Cards.getData(), row_n);
+                //tagUI.buttonEditName = destr(Cards.getGenerated(row_n, "buttonEditName"));
+                tagUI.editTagsContext(Cards.getData(), row_n, Cards.getGenerated(row_n, "buttonEditName"));
                 //ImGui::EndPopup();
             //}
 
@@ -113,21 +130,24 @@ void UItable::setTableClip(UIassembly& Cards) {
                     ImGui::OpenPopupContextItem(items.Info(row_n));
                 }
                 //editInfoContext(Cards.getData(), row_n);
-                infoUI.buttonInfoEditName = destr(Cards.getGenerated(row_n, "buttonInfoEditName"));
-                infoUI.editInfoContext(Cards.getData(), row_n);
+                //infoUI.buttonInfoEditName = destr(Cards.getGenerated(row_n, "buttonInfoEditName"));
+                infoUI.editInfoContext(Cards.getData(), row_n, Cards.getGenerated(row_n, "buttonInfoEditName"));
 
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items.Path(row_n));
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(Cards.getStrings().toolTip);
                 if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1)) {
-                    ImGui::OpenPopupContextItem(name);
+                    ImGui::OpenPopupContextItem(names_[row_n]);
                 }
                 //editPathContext(Cards.getData(), row_n);
-                pathUI.buttonOpenFile = destr(Cards.getGenerated(row_n, "buttonOpenFile"));
-                pathUI.buttonOpenPath = destr(Cards.getGenerated(row_n, "buttonOpenPath"));
-                pathUI.buttonPath = destr(Cards.getGenerated(row_n, "buttonPath"));
-                pathUI.editPathContext(Cards.getData(), row_n);
+                //pathUI.buttonOpenFile = destr(Cards.getGenerated(row_n, "buttonOpenFile"));
+                //pathUI.buttonOpenPath = destr(Cards.getGenerated(row_n, "buttonOpenPath"));
+                //pathUI.buttonPath = destr(Cards.getGenerated(row_n, "buttonPath"));
+                pathUI.editPathContext(Cards.getData(), row_n, {
+                    {"buttonOpenFile", Cards.getGenerated(row_n, "buttonOpenFile")},
+                    {"buttonOpenPath", Cards.getGenerated(row_n, "buttonOpenPath")},
+                    {"buttonPath", Cards.getGenerated(row_n, "buttonPath")} });
 
 
                 ImGui::PopID();

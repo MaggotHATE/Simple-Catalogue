@@ -186,7 +186,8 @@ bool existChar(char* item) {
     if (item != "" && item[0] != '\0') return false; else return true;
 }
 
-char* destr(const std::string s) {
+char* destr(const std::string& s) {
+    std::cout << __FUNCTION__ << " used for " << s << "\n";
     if (!s.empty()) {
         return _strdup(s.c_str());
     }
@@ -362,7 +363,7 @@ char* funcParseJsonTest(char* category, char* windowX, int idx, char* filename)
 }
 
 //book,classic
-std::vector<std::string> funcProcessTags(char* tags) {
+std::vector<std::string> funcProcessTags(char*& tags) {
     std::vector<std::string> arr;
     char* arr1[] = { "" };
     int len = strlen(tags);
@@ -388,7 +389,7 @@ std::vector<std::string> funcProcessTags(char* tags) {
     return arr;
 }
 
-int funcWriteJson_tags(char* tags, char* filename)
+int funcWriteJson_tags(char*& tags, char*& filename)
 {
     int done = 0;
 

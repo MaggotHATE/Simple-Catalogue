@@ -15,7 +15,7 @@ protected:
     ImVector<MyItem> searchItems;
 public:
     translateDB uiStrings_;
-    char* buttonEditName;
+    //char* buttonEditName;
 
     void popSearch(libCardAssembly uiData_);
     void setTableClipItm(libCardAssembly uiData_);

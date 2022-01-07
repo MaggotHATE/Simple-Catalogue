@@ -11,8 +11,8 @@
 class UIeditDouble : public UIcommons {
 public:
     translateDB uiStrings_;
-    char* buttonInfoEditName;
+    //char* buttonInfoEditName;
     void popEditDouble(libCardAssembly& uiData_, int row_n);
-    void editInfoContext(libCardAssembly& uiData_, int row_n);
+    void editInfoContext(libCardAssembly& uiData_, int row_n, char* buttonInfoEditName);
 };
 

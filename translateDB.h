@@ -7,6 +7,7 @@ class translateDB {
 public:
     translateDB() = default;
     translateDB(std::string fileTranslateEn, std::vector<char*> translationsList, int item_current);
+    //void translateDB::updateDB(std::string fileTranslateEn, std::vector<char*> translationsList);
 
     char* name_app;
     char* intro;

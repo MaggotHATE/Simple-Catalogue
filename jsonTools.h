@@ -35,7 +35,7 @@ int funcWriteJsonSimpleSubData(int buf, char* key[], char* value[], char*& filen
 int funcWriteJsonSimpleSubDataStr(int buf, std::string key[], std::string value[], char*& filename);
 int funcWriteJsonWriterData(char* key, char* value, char* filename);
 int funcWriteJsonInfoClass(std::vector<char*> uiBuffers, char*& filename);
-int funcWriteJson_tags(char* tags, char* filename);
+int funcWriteJson_tags(char*& tags, char*& filename);
 const char* funcHasTags(char* filename);
 char* funcGetIdxName(char*& filename, int idx);
 std::string funcGetIdxNameStr(std::string filename, int idx);
@@ -52,7 +52,7 @@ std::vector<std::map<std::string, std::string>> funcGetInfoPairs(char* filename)
 std::string funcGetDataPath(char* filename);
 std::string funcGetDataPathNew(char* filename);
 const char* funcHasName(char* filename, char* namename);
-char* destr(const std::string s);
+char* destr(const std::string& s);
 wchar_t* destrW(const std::wstring s);
 char* destrC(const std::string s);
 char* convToChar(std::string* s);

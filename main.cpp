@@ -297,7 +297,7 @@ void setDataArraysMap()
     //Cards = setDataArrays1();
 
     aUI.clear();
-    aUI = setDataArrays2(fileTranslateEn, translationsList);
+    aUI = setDataArrays2(fileTranslateEn, translationsList, aUI.getStrings().item_current);
 
     std::cout << __FUNCTION__ << ": " << aUI.getStrings().name_app << "\n";
     //std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
