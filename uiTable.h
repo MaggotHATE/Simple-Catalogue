@@ -15,6 +15,7 @@ protected:
     UIsearch searchUI;
     UIeditPath pathUI;
     std::vector<char*> names_;
+    std::vector<char*> namesShort_;
 public:
     void setTableClip(UIassembly& Cards);
     void setGenerated(std::string buttonEditName, std::string buttonInfoEditName, int row_n);

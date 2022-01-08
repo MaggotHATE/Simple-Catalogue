@@ -53,10 +53,10 @@ int main(int, char**, bool* p_open)
 
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
-    char* name_app = aUI.getStrings().name_app;
+    //char* name_app = aUI.getStrings().name_app;
     //std::cout << __FUNCTION__ << " " << name_app << "\n";
-    LPWSTR name_appL = new wchar_t[strlen(name_app) + 1];
-    mbstowcs(name_appL, name_app, strlen(name_app) + 1);
+    LPWSTR name_appL = new wchar_t[strlen(aUI.getStrings().name_app) + 1];
+    mbstowcs(name_appL, aUI.getStrings().name_app, strlen(aUI.getStrings().name_app) + 1);
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
     ::RegisterClassEx(&wc);
     HWND hwnd = ::CreateWindow(wc.lpszClassName, name_appL , WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);

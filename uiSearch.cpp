@@ -107,6 +107,19 @@ void UIsearch::popSearch(libCardAssembly uiData_) {
 
 void UIsearch::sortAndGenerate(libCardAssembly uiData_, int idx) {
     uiData_.getUI().sortUI(idx);
+
+    for (int i = 0; i < uiData_.getCards().size(); i++) {
+        char* name = uiData_.getUI().Name(i);
+        names_.push_back(name);
+        namesShort_.push_back(funcGetIdxName(name, 0));
+        //delete(name);
+        //strings_["buttonEditName"] = destr(Cards.getGenerated(i, "buttonEditName"));
+        //strings_["buttonInfoEditName"] = destr(Cards.getGenerated(i, "buttonInfoEditName"));
+        //strings_["buttonOpenFile"] = destr(Cards.getGenerated(i, "buttonOpenFile"));
+        //strings_["buttonOpenPath"] = destr(Cards.getGenerated(i, "buttonOpenPath"));
+        //strings_["buttonPath"] = destr(Cards.getGenerated(i, "buttonPath"));
+
+    }
 }
 
 void UIsearch::setTableClipItm(libCardAssembly uiData_) {
@@ -174,8 +187,8 @@ void UIsearch::setTableClipItm(libCardAssembly uiData_) {
                 ImGui::Text("%04d", items.ID(row_n));
                 ImGui::TableNextColumn();
 
-                char* name = items.Name(row_n);
-                if (ImGui::Button(funcGetIdxName(name, 0))) openFile1(name);
+                //char* name = items.Name(row_n);
+                if (ImGui::Button(namesShort_[row_n])) openFile1(names_[row_n]);
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items.Tags(row_n));

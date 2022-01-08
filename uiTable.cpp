@@ -22,7 +22,8 @@ void UItable::sortAndGenerate(UIassembly& Cards, int idx) {
     for (int i = 0; i < Cards.getData().getCards().size(); i++) {
         Cards.setGenereated(i);
         char* name = Cards.getData().getUI().Name(i);
-        names_.push_back(funcGetIdxName(name, 0));
+        names_.push_back(name);
+        namesShort_.push_back(funcGetIdxName(name, 0));
         //delete(name);
         //strings_["buttonEditName"] = destr(Cards.getGenerated(i, "buttonEditName"));
         //strings_["buttonInfoEditName"] = destr(Cards.getGenerated(i, "buttonInfoEditName"));
@@ -104,7 +105,7 @@ void UItable::setTableClip(UIassembly& Cards) {
                 ImGui::TableNextColumn();
 
                 //name = items.Name(row_n);
-                if (ImGui::Button(names_[row_n])) openFile1(names_[row_n]);
+                if (ImGui::Button(namesShort_[row_n])) openFile1(names_[row_n]);
                 ImGui::TableNextColumn();
 
                 ImGui::Text(items.Tags(row_n));

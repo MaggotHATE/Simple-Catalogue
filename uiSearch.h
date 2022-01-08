@@ -13,6 +13,8 @@ class UIsearch : public UIcommons {
 protected:
     std::vector<libCard> searchCards;
     ImVector<MyItem> searchItems;
+    std::vector<char*> names_;
+    std::vector<char*> namesShort_;
 public:
     translateDB uiStrings_;
     //char* buttonEditName;
