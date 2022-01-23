@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include "uiSearch.h"
 #include "testTools.h"
+#include <imgui.h>
 
 
 void UIsearch::SearchBuffers(int size) {
@@ -45,24 +46,27 @@ void UIsearch::popSearch(libCardAssembly uiData_) {
 
 
             if (ImGui::Button(uiStrings_.popOK, ImVec2(120, 0))) {
+                std::cout << __FUNCTION__ << " uiStrings_.popOK " << "\n";
+                clearSearchCards();
+                //char* Sname = "--";
+                //if (uiBuffers_[0] != "" && uiBuffers_[0][0] != '\0') Sname = uiBuffers_[0];
+                //char* Stags = "--";
+                //if (uiBuffers_[1] != "" && uiBuffers_[1][0] != '\0') Stags = uiBuffers_[1];
+                //char* Spath = "--";
+                //if (uiBuffers_[2] != "" && uiBuffers_[2][0] != '\0') Spath = uiBuffers_[2];
 
-                searchCards.clear();
-                char* Sname = "--";
-                if (uiBuffers_[0] != "" && uiBuffers_[0][0] != '\0') Sname = uiBuffers_[0];
-                char* Stags = "--";
-                if (uiBuffers_[1] != "" && uiBuffers_[1][0] != '\0') Stags = uiBuffers_[1];
-                char* Spath = "--";
-                if (uiBuffers_[2] != "" && uiBuffers_[2][0] != '\0') Spath = uiBuffers_[2];
-
-                char* SinfoKey = "--";
-                if (uiBuffers_[3] != "" && uiBuffers_[3][0] != '\0') SinfoKey = uiBuffers_[3];
-                char* Sinfoval = "--";
-                if (uiBuffers_[4] != "" && uiBuffers_[4][0] != '\0') Sinfoval = uiBuffers_[4];
+                //char* SinfoKey = "--";
+                //if (uiBuffers_[3] != "" && uiBuffers_[3][0] != '\0') SinfoKey = uiBuffers_[3];
+                //char* Sinfoval = "--";
+                //if (uiBuffers_[4] != "" && uiBuffers_[4][0] != '\0') Sinfoval = uiBuffers_[4];
 
                 if (searchCards.empty()) {
+
+                    std::cout << __FUNCTION__ << " searchCards.empty() " << "\n";
                     for (int n = 0; n < uiData_.getCards().size(); n++)
                     {
-                        if (uiData_.getCards()[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(uiData_.getCards()[n]);
+                        //if (uiData_.getCards()[n].getFind(Sname, Stags, Spath, SinfoKey, Sinfoval) > 0) searchCards.push_back(uiData_.getCards()[n]);
+                        if (uiData_.getCards()[n].getFind(uiBuffers_[0], uiBuffers_[1], uiBuffers_[2], uiBuffers_[3], uiBuffers_[4]) > 0) searchCards.push_back(uiData_.getCards()[n]);
                     }
                     //setDataArraysItems(searchCards, searchItems);
 
@@ -90,10 +94,10 @@ void UIsearch::popSearch(libCardAssembly uiData_) {
 
 
             }
-            if (ImGui::Button(uiStrings_.popBACK, ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            if (ImGui::Button(uiStrings_.popBACK, ImVec2(120, 0))) { searchCards.clear(); ImGui::CloseCurrentPopup(); }
 
             if (!searchCards.empty()) {
-                setTableClipItm(searchCards);
+                setTableClipItm();
             }
 
             ImGui::SetItemDefaultFocus();
@@ -105,11 +109,11 @@ void UIsearch::popSearch(libCardAssembly uiData_) {
 
 }
 
-void UIsearch::sortAndGenerate(libCardAssembly uiData_, int idx) {
-    uiData_.getUI().sortUI(idx);
+void UIsearch::sortAndGenerate(int idx) {
+    qsort(&searchItems[idx], (size_t)searchItems.Size, sizeof(searchItems[idx]), MyItem::CompareWithSortSpecs1);
 
-    for (int i = 0; i < uiData_.getCards().size(); i++) {
-        char* name = uiData_.getUI().Name(i);
+    for (int i = 0; i < searchCards.size(); i++) {
+        char* name = searchItems[i].Name;
         names_.push_back(name);
         namesShort_.push_back(funcGetIdxName(name, 0));
         //delete(name);
@@ -122,9 +126,16 @@ void UIsearch::sortAndGenerate(libCardAssembly uiData_, int idx) {
     }
 }
 
-void UIsearch::setTableClipItm(libCardAssembly uiData_) {
-    std::vector<libCard> libCards = uiData_.getCards();
-    libUI items = uiData_.getUI();
+void UIsearch::clearSearchCards() {
+    //for (int i = 0; i < searchCards.size(); i++) {
+    //    searchCards[i].toDelete();
+    //}
+    searchCards.clear();
+}
+
+void UIsearch::setTableClipItm() {
+    //std::vector<libCard> libCards = uiData_.getCards();
+    //libUI items = uiData_.getUI();
 
     // Create item list
 
@@ -159,12 +170,12 @@ void UIsearch::setTableClipItm(libCardAssembly uiData_) {
             {
                 MyItem::s_current_sort_specs1 = sorts_specs; // Store in variable accessible by the sort function.
 
-                MyItem item = items.getAUI(0);
-                int size = items.Size();
+                MyItem item = searchItems[0];
+                int size = searchItems.Size;
 
                 //std::cout << size << " : " << sizeof(item) << ";  " << item.Name << "\n";
 
-                if (size > 1) sortAndGenerate(uiData_, 0);
+                if (size > 1) sortAndGenerate( 0);
                 // items.sortUI(0);
                 //qsort(&item, (size_t)size, sizeof(item), MyItem::CompareWithSortSpecs1);
 
@@ -175,29 +186,29 @@ void UIsearch::setTableClipItm(libCardAssembly uiData_) {
 
         // Demonstrate using clipper for large vertical lists
         ImGuiListClipper clipper;
-        clipper.Begin(items.Size());
+        clipper.Begin(searchItems.Size);
 
         while (clipper.Step())
             for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
             {
 
-                ImGui::PushID(items.ID(row_n));
+                ImGui::PushID(searchItems[row_n].ID);
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
-                ImGui::Text("%04d", items.ID(row_n));
+                ImGui::Text("%04d", searchItems[row_n].ID);
                 ImGui::TableNextColumn();
 
                 //char* name = items.Name(row_n);
                 if (ImGui::Button(namesShort_[row_n])) openFile1(names_[row_n]);
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items.Tags(row_n));
+                ImGui::Text(searchItems[row_n].Tags);
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items.Info(row_n));
+                ImGui::Text(searchItems[row_n].Info);
                 ImGui::TableNextColumn();
 
-                ImGui::Text(items.Path(row_n));
+                ImGui::Text(searchItems[row_n].Path);
 
                 ImGui::PopID();
             }

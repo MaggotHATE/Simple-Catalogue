@@ -31,7 +31,7 @@ int funcCloseFileOpened();
 //void setDataArrays();
 //void setDataArrays(std::vector<libCard>& libCards);
 //libCardAssembly setDataArrays1();
-UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList, int idx);
+UIassembly setDataArrays2(std::string& fileTranslateEn, std::vector<char*> translationsList, int idx, char*& exampleConfig);
 
 //void setDataArraysItems(std::vector<libCard> libCards, ImVector<my_item::MyItem>& items);
 //void updateDataArraysItems(std::vector<libCard> libCards, int n);

@@ -29,6 +29,7 @@ std::string fileNameFull(std::string filename);
 int funcValidFilesProcess(std::string path, std::vector<std::string>& names, std::vector<std::string>& tags, std::vector<std::string>& info, std::vector<std::string>& paths);
 int funcValidFilesProcessMaps(std::string path, std::vector<std::string>& names, std::map<std::string, std::map<std::string, std::string>>& tagsANDinfo);
 int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards);
+std::vector<libCard> funcValidFilesProcessClass1(std::string path);
 //void funcOpenWinapi();
 
 

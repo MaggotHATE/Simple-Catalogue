@@ -20,7 +20,8 @@ public:
     //char* buttonEditName;
 
     void popSearch(libCardAssembly uiData_);
-    void setTableClipItm(libCardAssembly uiData_);
+    void setTableClipItm();
     void SearchBuffers(int size);
-    void sortAndGenerate(libCardAssembly uiData_, int idx);
+    void sortAndGenerate(int idx);
+    void clearSearchCards();
 };

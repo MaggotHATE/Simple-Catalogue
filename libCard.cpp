@@ -90,28 +90,30 @@ bool libCard::setPath(char* path) {
 
 int libCard::getFind(char* name, char* tags, char* path, char* infoKey, char* infoVal) {
     int result = 0;
-    if (name != "--") {
+    if (name != "--" && existChar(name)) {
         std::string Sname = name_;
         if (Sname.find(name) < Sname.npos) {
             result += 1;
             std::cout << "Found in name_: " << name << "\n";
         }
     }
-    if (tags != "--") {
+    if (tags != "--" && existChar(tags)) {
         std::string Stags = tags_;
         if (Stags.find(tags) < Stags.npos) {
             result += 2;
             std::cout << "Found in tags_: " << tags << "\n";
         }
     }
-    if (path != "--") {
+    if (path != "--" && existChar(path)) {
         std::string Spath = path_;
         if (Spath.find(path) < Spath.npos) {
             result += 4;
             std::cout << "Found in path_: " << path << "\n";
         }
     }
-    if (infoKey != "--" || infoVal != "--") {
+    if ( (infoKey != "--" && existChar(infoKey))
+        || (infoVal != "--" && existChar(infoVal))
+        ) {
         std::map<char*, char*>::iterator it = info_.begin();
         // Iterate over the map using Iterator till end.
         int subCnt = 0;
@@ -121,10 +123,11 @@ int libCard::getFind(char* name, char* tags, char* path, char* infoKey, char* in
             std::string key = it->first;
             std::string val = it->second;
 
-            if (key.find(infoKey) < key.npos) {
+            if (existChar(infoKey) && key.find(infoKey) < key.npos) {
                 subCnt += 1;
             }
-            if (val.find(infoVal) < val.npos) {
+
+            if (existChar(infoVal) && val.find(infoVal) < val.npos) {
                 subCnt += 1;
             }
 
@@ -160,8 +163,12 @@ bool libCard::empty() {
 }
 
 void libCard::toDelete() {
-    delete(name_);
-    delete(tags_);
-    delete(path_);
+    //unExistChar(name_);
+    //unExistChar(tags_);
+    //unExistChar(path_);
+    std::cout << __FUNCTION__ << " : " << name_ << "\n";
+    if (existChar(name_)) delete(name_);
+    if (existChar(tags_)) delete(tags_);
+    if (existChar(path_)) delete(path_);
     info_.clear();
 }

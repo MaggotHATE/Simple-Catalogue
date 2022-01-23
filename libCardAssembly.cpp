@@ -16,14 +16,14 @@ void libCardAssembly::setUp(std::vector<libCard>& assemblyOf_I)
 {
 
     clearC();
-    _assemblyView.clearV();
+    clearV();
 
     _assemblyOf = assemblyOf_I;
     //_assemblyView = assemblyView_I;
     _assemblyView = (assemblyOf_I);
 
 
-    std::cout << __FUNCTION__ << ": " << _assemblyView.Name(0) << "\n";
+    //std::cout << __FUNCTION__ << ": " << _assemblyView.Name(0) << "\n";
 }
 
 libUI& libCardAssembly::getUI() {
@@ -124,7 +124,7 @@ void libCardAssembly::clearC() {
     for (int i = 0; i < _assemblyOf.size(); i++) {
         _assemblyOf[i].toDelete();
     }
-    std::cout << __FUNCTION__ << " deleted " << _assemblyOf.size() << "\n";
+    //std::cout << __FUNCTION__ << " deleted " << _assemblyOf.size() << "\n";
     
     _assemblyOf.clear();
 }

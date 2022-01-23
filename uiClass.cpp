@@ -40,7 +40,7 @@ char* UIassembly::getGenerated(int row_n, char* stringName) {
     return uiGenerated_[row_n][stringName];
 }
 
-UIassembly::UIassembly(translateDB _translations, libCardAssembly _data) {
+UIassembly::UIassembly(translateDB _translations, libCardAssembly _data, char*& Config) {
 
     clearData();
 
@@ -51,7 +51,7 @@ UIassembly::UIassembly(translateDB _translations, libCardAssembly _data) {
         setGenereated(i);
         std::cout << __FUNCTION__ << " : " << i << " = " << uiGenerated_[i]["buttonInfoEditName"] << "\n";
     }
-
+    pathConfig = Config;
 }
 
 void UIassembly::sortAndGenerate(int idx) {
@@ -64,6 +64,7 @@ void UIassembly::sortAndGenerate(int idx) {
 }
 
 void UIassembly::clearData() {
+    std::cout << __FUNCTION__ << " START " << "\n";
     uiData_.clearC();
     uiData_.clearV();
 }
@@ -71,6 +72,17 @@ void UIassembly::clearData() {
 //
 //}
 void UIassembly::clearGenerated() {
+    std::cout << __FUNCTION__ << " START " << "\n";
+    for (int i = 0; i < uiData_.getCards().size(); i++) {
+        //delete(uiGenerated_[i]["name"]);
+        delete(uiGenerated_[i]["nameOnlyStr"]);
+        delete(uiGenerated_[i]["buttonEditName"]);
+        delete(uiGenerated_[i]["buttonInfoEditName"]);
+        delete(uiGenerated_[i]["buttonPath"]);
+        delete(uiGenerated_[i]["buttonOpenPath"]);
+        delete(uiGenerated_[i]["buttonOpenFile"]);
+    }
+
     uiGenerated_.clear();
 }
 

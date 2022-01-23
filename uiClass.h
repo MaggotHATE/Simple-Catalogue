@@ -17,10 +17,13 @@ protected:
     libCardAssembly uiData_;
     std::vector<libCard> searchCards;
     ImVector<MyItem> searchItems;
+    
     //UIcommons searchBuffers;
 public:
+    char* pathConfig;
+
     UIassembly() = default;
-    UIassembly(translateDB _translations, libCardAssembly _data);
+    UIassembly(translateDB _translations, libCardAssembly _data, char*& Config);
 
     void loadTransl(translateDB _translations);
     void setData(libCardAssembly _data);

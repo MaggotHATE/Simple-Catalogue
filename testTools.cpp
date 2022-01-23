@@ -317,30 +317,32 @@ int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards)
         //std::vector<std::string> tagsANDinfo;
         if (isdebug == true) std::cout << " STARTING " << filename << "\n";
 
-
-        char* fpath = destr(filenamepath);
-        if (isdebug == true) std::cout << " FPATH " << fpath << "\n";
-        const char* hasTags = funcHasTags(fpath);
+        nameG = destr(filenamepath);
+        //char* fpath = destr(filenamepath);
+        if (isdebug == true) std::cout << " FPATH " << nameG << "\n";
+        //const char* hasTags = funcHasTags(nameG);
+        tagsG = funcGetTags(nameG);
         //std::cout << " HAS TAGS " << hasTags << "\n";
 
 
-        if (hasTags != "NULL") {
+        if (tagsG != "NULL") {
             ////////////////////////////// TAGS
             //char* realTags = funcGetTags(fpath);
             //std::string filetags;
             //filetags.assign(realTags);
             //tagsG = destr(filetags);
-            tagsG = funcGetTags(fpath);
+            // 
+            //tagsG = funcGetTags(nameG);
 
 
             ////////////////////////////// NAMES
-            nameG = destr(filenamepath);
+            //nameG = destr(filenamepath);
             //tagsANDinfo[filename]["name"] = filenamepath;
 
             //status = 1;
 
             /////////////////////////////// FILE PATH
-            std::string fileFolder = funcGetDataPathNew(destr(filenamepath));
+            std::string fileFolder = funcGetDataPathNew(nameG);
             if (fileFolder == "NULL") {
                 pathG = destr(path);
                 //funcFixPath(destr(filenamepath));
@@ -380,6 +382,95 @@ int funcValidFilesProcessClass(std::string path, std::vector<libCard>& libCards)
     //std::cout << " NAMES CHECK " << names[0] << "\n";
 
     return status;
+}
+
+std::vector<libCard> funcValidFilesProcessClass1(std::string path) {
+    //int status = 0;
+    // 
+    //std::vector<std::string> names;
+    //std::map<std::string, std::map<std::string, std::string>> tagsANDinfo;
+    //std::vector<std::vector<std::map<std::string, std::string>>>
+    //std::map<std::string, std::vector<std::string>>
+    //std::map<std::string, std::map<std::string, std::string>>
+    std::vector<libCard> libCards;
+    char* nameG;
+    char* tagsG;
+    char* pathG;
+    std::map<char*, char*> infoMapG;
+
+    for (const auto& file : fs::directory_iterator(path)) {
+        std::string filenamepath = file.path().string();
+        std::string filename = file.path().filename().string();
+        //std::vector<std::string> tagsANDinfo;
+        if (isdebug == true) std::cout << " STARTING " << filename << "\n";
+
+        nameG = destr(filenamepath);
+        //char* fpath = destr(filenamepath);
+        if (isdebug == true) std::cout << " FPATH " << nameG << "\n";
+        //const char* hasTags = funcHasTags(nameG);
+        tagsG = funcGetTags(nameG);
+        //std::cout << " HAS TAGS " << hasTags << "\n";
+
+
+        if (tagsG != "NULL") {
+            
+
+            ////////////////////////////// TAGS
+            //char* realTags = funcGetTags(fpath);
+            //std::string filetags;
+            //filetags.assign(realTags);
+            //tagsG = destr(filetags);
+            // 
+            //tagsG = funcGetTags(nameG);
+
+
+            ////////////////////////////// NAMES
+            //nameG = destr(filenamepath);
+            //tagsANDinfo[filename]["name"] = filenamepath;
+
+            //status = 1;
+
+            /////////////////////////////// FILE PATH
+            std::string fileFolder = funcGetDataPathNew(nameG);
+            if (fileFolder == "NULL") {
+                pathG = destr(path);
+                //funcFixPath(destr(filenamepath));
+                //status += 2;
+            }
+            else {
+                pathG = destr(fileFolder);
+                //funcFixPath(destr(filenamepath));
+                //status += 3;
+            }
+
+
+            //char* fpath = destr(filenamepath);
+            //std::cout << " TAGS FINISHED " << realTags << "\n";
+
+            //////////////////////////////// INFO
+            if (funcHasName(nameG, "info") != "NULL") {
+                std::string fileInfo;
+                infoMapG = funcGetInfoMap(nameG);
+            }
+            //tags[filename] = tagsANDinfo;
+           // std::cout << " INFO FINISHED " << filename << "\n";
+          //  std::cout << "NAMES CHECK " << nameG << "\n" << "TAGS: " << tagsG << "\n" << "PATH: " << pathG << "\n";
+            libCard libCardX(nameG, tagsG, pathG, infoMapG);
+            libCards.push_back(libCardX);
+
+        }
+        else {
+            if (isdebug == true) std::cout << " INVALID FILE " << filename << "\n";
+        }
+    }
+
+    //delete(nameG);
+    //delete(tagsG);
+    //delete(pathG);
+
+    //std::cout << " NAMES CHECK " << names[0] << "\n";
+
+    return libCards;
 }
 
 

@@ -32,3 +32,11 @@ int IMGUI_CDECL MyItem::CompareWithSortSpecs1(const void* lhs, const void* rhs)
 	// Your own compare function may want to avoid fallback on implicit sort specs e.g. a Name compare if it wasn't already part of the sort specs.
 	return (a->ID - b->ID);
 }
+
+void MyItem::Clear() {
+    //delete(ID);
+    //delete[](Name);
+    //delete[](Tags);
+    //delete[](Info);
+    //delete[](Path);
+}

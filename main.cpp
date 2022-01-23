@@ -47,6 +47,7 @@ int main(int, char**, bool* p_open)
 
     can_update = true;
     //aUI.setStrings(fileTranslateEn, translationsList, 0);
+    aUI.pathConfig = "catExample.json";
     setDataArraysMap();
     //loadTranslation(fileTranslateEn, translationsList, langDB);
     
@@ -297,9 +298,10 @@ void setDataArraysMap()
     //Cards = setDataArrays1();
 
     aUI.clear();
-    aUI = setDataArrays2(fileTranslateEn, translationsList, aUI.getStrings().item_current);
+    //std::cout << __FUNCTION__ << ": pathConfig = " << aUI.pathConfig << "\n";
+    aUI = setDataArrays2(fileTranslateEn, translationsList, aUI.getStrings().item_current, aUI.pathConfig);
 
-    std::cout << __FUNCTION__ << ": " << aUI.getStrings().name_app << "\n";
+    //std::cout << __FUNCTION__ << ": " << aUI.getStrings().name_app << "\n";
     //std::cout << __FUNCTION__ << ": " << Cards._assemblyView[0].Name << "\n";
     //setDataArraysItems(libCards);
     can_update = false;

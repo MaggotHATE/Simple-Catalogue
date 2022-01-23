@@ -182,12 +182,25 @@ int exist2(const char* name)
     return (stat(nameuserFld, &buffer) == 0);
 }
 
-bool existChar(char* item) {
-    if (item != "" && item[0] != '\0') return false; else return true;
+bool existChar(char*& item) {
+    if (item != "" && item[0] != '\0') {
+        std::cout << __FUNCTION__ << " found "  << item << "\n";
+        return true;
+    }
+    else return false;
+}
+
+bool unExistChar(char*& item) {
+    if (item != "" && item[0] != '\0') {
+        std::cout << __FUNCTION__ << " DELETED " << item << "\n";
+        delete(item);
+        return true;
+    }
+    else return false;
 }
 
 char* destr(const std::string& s) {
-    std::cout << __FUNCTION__ << " used for " << s << "\n";
+    //std::cout << __FUNCTION__ << " used for " << s << "\n";
     if (!s.empty()) {
         return _strdup(s.c_str());
     }
@@ -778,17 +791,6 @@ const char* funcHasTags(char* filename)
     std::string errs;
     Json::parseFromStream(rbuilder, fs, &root, &errs);
 
-    //try {
-    //    fs >> root;
-    //}
-    //catch (const char* message) {
-
-    //    std::cout << message << "\n";
-    //}
-
-
-   // std::cout << "funcHasTags To Root " << "\n";
-
     if (root) {
        // std::cout << "funcHasTags Has Root " << "\n";
         char* tmpName = funcGetIdxName(filename, 0);
@@ -802,9 +804,9 @@ const char* funcHasTags(char* filename)
     return testName;
 }
 
-const char* funcHasName(char* filename, char* namename)
+const char* funcHasName(char*& filename, char* namename)
 {
-    const char* testName = "NULL";
+    //const char* testName = "NULL";
     std::fstream fs;
     Json::Value root;
 
@@ -818,22 +820,25 @@ const char* funcHasName(char* filename, char* namename)
 
         if (subPart[namename].getMemberNames()[0] != "") {
             //std::cout << " is info0 " << "\n";
-            testName = subPart[namename].getMemberNames()[0].c_str();
+            return subPart[namename].getMemberNames()[0].c_str();
+
         }
+        else return "NULL";
         /*else {
             std::cout << " is info " << "\n";
             testName = subPart[namename].getMemberNames()[0].c_str();
         }*/
     }
+    else return "NULL";
 
     if (isdebug == true) std::cout << __FUNCTION__ << " FINISHED " << "\n";
 
-    return testName;
+    //return testName;
 }
 
-char* funcGetTags(char* filename)
+char* funcGetTags(char*& filename)
 {
-    char* testName = "NULL";
+    //char* testName = "NULL";
     Json::Value root;
     root = funcGetJson(filename);
     Json::Value subPart = root[funcGetIdxName(filename, 0)];
@@ -841,8 +846,8 @@ char* funcGetTags(char* filename)
     //std::cout << " tmpTags" << tmpTags << "\n";
     if (subPart["tags"]) {
         int len = (subPart["tags"]).size();
-        
-       // std::cout << filename << " len = " << len << "\n";
+
+        // std::cout << filename << " len = " << len << "\n";
         for (int i = 0; i < len; i++) {
             tmpTags += subPart["tags"][i].asString();
             if (i < (len - 1)) {
@@ -851,13 +856,15 @@ char* funcGetTags(char* filename)
             //tmpTags = stringConvert(tmpTags, CP_UTF8, MB_ERR_INVALID_CHARS, CP_ACP, WC_COMPOSITECHECK);
             //std::cout << i << " : " << tmpTags << "\n";
         }
+        return destr(tmpTags);
     }
-    testName = _strdup(tmpTags.c_str());
+    else return "NULL";
+    
 
     //std::cout << filename << " got tags: " << testName << "\n";
-    if (isdebug == true) std::cout << __FUNCTION__ << " got tags: " << testName << "\n";
+    if (isdebug == true) std::cout << __FUNCTION__ << " got tags: " << tmpTags << "\n";
     //std::cout << __FUNCTION__ << "\n";
-    return testName;
+    //return testName;
 }
 
 char* funcGetInfo(char* filename)
@@ -899,7 +906,7 @@ char* funcGetInfo(char* filename)
     return testName;
 }
 
-std::map<char*, char*> funcGetInfoMap(char* filename)
+std::map<char*, char*> funcGetInfoMap(char*& filename)
 {
     //std::cout << __FUNCTION__ << "\n";
     std::map<char*, char*> testName;
@@ -921,8 +928,8 @@ std::map<char*, char*> funcGetInfoMap(char* filename)
         //std::cout << "subPart1 len = " << len << "\n";
 
         for (int i = 0; i < len; i++) {
-            char* tmpName = destr(subPart1.getMemberNames()[i]);
-            testName[tmpName] = destr(subPart1[tmpName].asString());
+            //char* tmpName = destr(subPart1.getMemberNames()[i]);
+            testName[destr(subPart1.getMemberNames()[i])] = destr(subPart1[destr(subPart1.getMemberNames()[i])].asString());
             //std::cout << tmpTags << " +Name " << "\n";
             //std::cout << tmpTags << "\n";
         }
@@ -1195,5 +1202,24 @@ std::string getPathUser()
     pathString.erase(defPos);
     pathString += "userdata\\";
     return pathString;
+}
+
+std::string getPathJson(char*& configName)
+{
+    std::string pathString = getPathExe();
+    //std::cout << __FUNCTION__ << "\n";
+    int defPos = pathString.find(_pgmptr);
+    pathString.erase(defPos);
+
+    Json::Value root;
+    root = funcGetJson(configName);
+    if (root["userpath"]) {
+        pathString += root["userpath"].asString();
+        return pathString;
+    }
+    else {
+        pathString += "userdata\\";
+        return pathString;
+    }
 }
 

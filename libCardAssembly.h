@@ -33,6 +33,7 @@ public:
 
     bool setCinfo(CharMap info, int idx);
 
+    
 
     bool libCardAssembly::setData(int idx, char* name = "--", char* tags = "--", char* path = "--", std::map<char*, char*> inform = {{"NULL","NULL"}});
 

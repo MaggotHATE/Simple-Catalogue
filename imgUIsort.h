@@ -51,5 +51,8 @@ namespace my_item
 
         // Compare function to be used by qsort()
 		static int IMGUI_CDECL CompareWithSortSpecs1(const void* lhs, const void* rhs);
+
+        // Clearing function
+        void Clear();
     };
 }

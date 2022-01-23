@@ -70,6 +70,7 @@ char testName1[64] = "Not tagged";
 char* getPathOnly();
 //char* getPathUser();
 std::string userPath = getPathUser();
+//char* exampleConfig = "catExample.json";
 
 //bool can_update;
 //int need_update;
@@ -238,18 +239,23 @@ bool popCreate(UIassembly Cards) {
 //    return Cards;
 //}
 
-UIassembly setDataArrays2(std::string fileTranslateEn, std::vector<char*> translationsList, int idx)
+UIassembly setDataArrays2(std::string& fileTranslateEn, std::vector<char*> translationsList, int idx, char*& exampleConfig)
 {
-    std::cout << __FUNCTION__ << "\n";
+    //std::cout << __FUNCTION__ << ": " << exampleConfig << "\n";
 
-    std::vector<libCard> libCardsTemp;
-    funcValidFilesProcessClass(getPathUser(), libCardsTemp);
-    UIassembly uiCards = UIassembly(translateDB(fileTranslateEn, translationsList, idx), libCardAssembly(libCardsTemp));
+    //std::vector<libCard> libCardsTemp;
+    //funcValidFilesProcessClass(getPathUser(), libCardsTemp);
+    //std::vector<libCard> libCardsTemp = funcValidFilesProcessClass1(getPathUser());
+    std::vector<libCard> libCardsTemp = funcValidFilesProcessClass1(getPathJson(exampleConfig));
+    //UIassembly uiCards = UIassembly(translateDB(fileTranslateEn, translationsList, idx), libCardAssembly(funcValidFilesProcessClass1(getPathUser())), exampleConfig);
+    //UIassembly uiCards = UIassembly(translateDB(fileTranslateEn, translationsList, idx), libCardAssembly(libCardsTemp), exampleConfig);
 
-    std::cout << uiCards.getData().getCards()[0].getFind("--", "seri", "--", "--", "--") << "\n";
-    std::cout << uiCards.getData().getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";
+    //std::cout << uiCards.getData().getCards()[0].getFind("--", "seri", "--", "--", "--") << "\n";
+    //std::cout << uiCards.getData().getCards()[0].getFind("a", "b", "c", "d", "z") << "\n";
 
-    return uiCards;
+
+    return UIassembly(translateDB(fileTranslateEn, translationsList, idx), libCardAssembly(libCardsTemp), exampleConfig);
+    //return uiCards;
 }
 
 //void setDataArraysItems(std::vector<libCard> libCards, ImVector<MyItem>& items)
