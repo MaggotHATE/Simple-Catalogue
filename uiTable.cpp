@@ -31,6 +31,7 @@ void UItable::clearNamesAll() {
 void UItable::sortAndGenerate(UIassembly& Cards, int idx) {
     Cards.getData().getUI().sortUI(idx);
     clearNamesAll();
+    Cards.clearGenerated();
 
     for (int i = 0; i < Cards.getData().getCards().size(); i++) {
         Cards.setGenereated(i);
