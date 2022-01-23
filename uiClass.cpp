@@ -27,13 +27,17 @@ void UIassembly::setStrings(std::string fileTranslateEn, std::vector<char*> tran
 }
 
 void UIassembly::setGenereated(int row_n) {
+    int row_x = uiData_.getCardIdx(row_n);
     uiGenerated_[row_n]["name"] = uiData_.getCardElem(CNAME, row_n);
     uiGenerated_[row_n]["nameOnlyStr"] = getFileNameOnly(destr(uiGenerated_[row_n]["name"]));
     uiGenerated_[row_n]["buttonEditName"] = destr(uiStrings_.editTags + funcGetIdxNameStr(uiGenerated_[row_n]["nameOnlyStr"], 0));
     uiGenerated_[row_n]["buttonInfoEditName"] = destr(uiStrings_.editInfo + funcGetIdxNameStr(uiGenerated_[row_n]["nameOnlyStr"], 0));
-    uiGenerated_[row_n]["buttonPath"] = destr(uiStrings_.edit_path_num + std::to_string(row_n));
-    uiGenerated_[row_n]["buttonOpenPath"] = destr(uiStrings_.open_folder_num + std::to_string(row_n));
-    uiGenerated_[row_n]["buttonOpenFile"] = destr(uiStrings_.open_num + std::to_string(row_n));
+    
+    uiGenerated_[row_n]["buttonPath"] = destr(uiStrings_.edit_path_num + std::to_string(row_x));
+    uiGenerated_[row_n]["buttonOpenPath"] = destr(uiStrings_.open_folder_num + std::to_string(row_x));
+    uiGenerated_[row_n]["buttonOpenFile"] = destr(uiStrings_.open_num + std::to_string(row_x));
+
+    std::cout << __FUNCTION__ << " : " << row_n << " = " << uiGenerated_[row_n]["buttonInfoEditName"] << "\n";
 }
 
 char* UIassembly::getGenerated(int row_n, char* stringName) {

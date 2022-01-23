@@ -16,8 +16,21 @@ void UItable::SearchBuffers(int size) {
     searchUI.SearchBuffers(size);
 }
 
+void UItable::clearNamesAll() {
+    std::cout << __FUNCTION__ << " START " << names_.size() << "\n";
+
+    for (int i = 0; i < names_.size(); i++) {
+        //if (existChar(names_[i])) delete(names_[i]);
+        if (existChar(namesShort_[i])) delete(namesShort_[i]);
+    }
+
+    names_.clear();
+    namesShort_.clear();
+}
+
 void UItable::sortAndGenerate(UIassembly& Cards, int idx) {
     Cards.getData().getUI().sortUI(idx);
+    clearNamesAll();
 
     for (int i = 0; i < Cards.getData().getCards().size(); i++) {
         Cards.setGenereated(i);

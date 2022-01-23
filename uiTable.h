@@ -22,4 +22,5 @@ public:
     void popSearch(UIassembly& Cards);
     void SearchBuffers(int size);
     void UItable::sortAndGenerate(UIassembly& Cards, int idx);
+    void UItable::clearNamesAll();
 };

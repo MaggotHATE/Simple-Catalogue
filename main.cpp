@@ -260,14 +260,13 @@ int main(int, char**, bool* p_open)
             ImGui::End();
         }
         else {
-            
 
             ImVec2 center = ImGui::GetMainViewport()->GetCenter();
             ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 
             ImGui::OpenPopup("Choose a config / Выберите конфигурацию");
 
-            if (ImGui::BeginPopupModal("Choose a config / Выберите конфигурацию", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+            if (ImGui::BeginPopupModal("Choose a config / Выберите конфигурацию", NULL,  ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove))
             {
                 
 
