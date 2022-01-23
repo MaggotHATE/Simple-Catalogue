@@ -120,19 +120,23 @@ std::string fileNameFull(std::string filename) {
 }
 
 std::vector<std::string> funcFilesInFolder(std::string path) {
+    std::cout << __FUNCTION__ << " " << path << "\n";
     std::vector<std::string> fileList;
-    for (const auto& file : fs::directory_iterator(path))
+    for (const auto& file : fs::directory_iterator(path)) {
         fileList.push_back(file.path().string());
-
+        std::cout << "Path: " << file.path().string() << "\n";
+    }
     return fileList;
 }
 
 std::vector<char*> funcFilesTypeInFolder(std::string path, std::string type) {
+    //std::cout << __FUNCTION__ << " " << path << "\n";
     std::vector<char*> fileList;
     for (const auto& file : fs::directory_iterator(path)) {
         std::string name = file.path().filename().string();
         if (name.find(type) != name.npos) {
             fileList.push_back( destr( file.path().string() ) );
+            std::cout << __FUNCTION__ << " " << file.path().string() << "\n";
         }
     }
     return fileList;

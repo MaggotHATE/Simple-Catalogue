@@ -31,6 +31,8 @@ std::string fileTranslateDef = "./translation/translation_en.json";
 std::map<std::string, std::map<std::string, std::string>> catalogueDB;
 std::vector<char*> translationsList = funcFilesTypeInFolder("./translation", ".json");
 
+char* configPopup = "Choose a config / Выберите конфигурацию";
+
 //extern char* name_app;
 //extern char* intro;
 //extern char* button_create;
@@ -77,6 +79,7 @@ int canShow = 0;
 //extern int item_current;
 
 void setDataArraysMap();
+std::vector<char*> getConfigList();
 
 
 /*

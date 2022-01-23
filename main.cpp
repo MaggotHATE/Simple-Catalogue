@@ -47,8 +47,8 @@ int main(int, char**, bool* p_open)
 
     can_update = true;
     //aUI.setStrings(fileTranslateEn, translationsList, 0);
-    aUI.pathConfig = "catExample.json";
-    setDataArraysMap();
+    
+    //setDataArraysMap();
     //loadTranslation(fileTranslateEn, translationsList, langDB);
     
 
@@ -56,8 +56,9 @@ int main(int, char**, bool* p_open)
     //ImGui_ImplWin32_EnableDpiAwareness();
     //char* name_app = aUI.getStrings().name_app;
     //std::cout << __FUNCTION__ << " " << name_app << "\n";
-    LPWSTR name_appL = new wchar_t[strlen(aUI.getStrings().name_app) + 1];
-    mbstowcs(name_appL, aUI.getStrings().name_app, strlen(aUI.getStrings().name_app) + 1);
+    //LPWSTR name_appL = new wchar_t[strlen(aUI.getStrings().name_app) + 1];
+    LPWSTR name_appL = L"Simple Catalogue"; // trying to add config choice at startup
+    //mbstowcs(name_appL, aUI.getStrings().name_app, strlen(aUI.getStrings().name_app) + 1);
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
     ::RegisterClassEx(&wc);
     HWND hwnd = ::CreateWindow(wc.lpszClassName, name_appL , WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
@@ -118,10 +119,12 @@ int main(int, char**, bool* p_open)
 
     ImVec4 clear_color = ImVec4(0.55f, 0.55f, 0.60f, 0.90f);
 
+    //aUI.pathConfig = "catExample.json";
+    aUI.pathConfig = "NULL";
+    std::vector<char*> configList = getConfigList();
+    std::cout << __FUNCTION__ << " " << configList[0] << "\n";
 
-    
-
-
+    //setDataArraysMap();
     
 
     int numItems = namesList.size();
@@ -163,7 +166,13 @@ int main(int, char**, bool* p_open)
             ImGui::ShowDemoWindow(&show_demo_window);
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-        {
+        if (aUI.pathConfig != "NULL") {
+            
+
+            if (can_update) {
+                setDataArraysMap();
+            }
+
             static float f = 0.0f;
             static int counter = 0;
             char* addPathName;
@@ -233,9 +242,9 @@ int main(int, char**, bool* p_open)
                 }
                 ImGui::EndTabBar();
             }
-            if (can_update) {
-                setDataArraysMap();
-            }
+            //if (can_update) {
+            //    setDataArraysMap();
+            //}
             //if (need_update != -1) {
             //    //updateDataArraysItems(libCards, need_update);
             //    //updateDataArrays(libCards, need_update);
@@ -247,6 +256,50 @@ int main(int, char**, bool* p_open)
             //popSearch(aUI.getData());
 
             table.popSearch(aUI);
+
+            ImGui::End();
+        }
+        else {
+            
+
+            ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+            ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+            ImGui::OpenPopup("Choose a config / Выберите конфигурацию");
+
+            if (ImGui::BeginPopupModal("Choose a config / Выберите конфигурацию", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+            {
+                
+
+                if (ImGui::BeginListBox("Configs in main folder \nКонфигурации в папке с приложением"))
+                {
+                    
+                    
+                    ////std::cout << __FUNCTION__ << " " << configList[0] << "\n";
+                    //static int selected = -1;
+                    ////int x = configList.size();
+                    //for (int n = 0; n < configList.size(); n++)
+                    //{
+                    //    char buf[32];
+                    //    sprintf(buf, configList[n], n);
+                    //    if (ImGui::Selectable(buf, selected == n))
+                    //        aUI.pathConfig = configList[n];
+                    //}
+                    //ImGui::TreePop();
+                    static int item_current_idx = -1;
+                    for (int n = 0; n < configList.size(); n++)
+                    {
+                        const bool is_selected = (item_current_idx == n);
+                        if (ImGui::Selectable(configList[n], is_selected))
+                            item_current_idx = n;
+
+                        // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                        if (is_selected)
+                            aUI.pathConfig = configList[n];
+                    }
+                    ImGui::EndListBox();
+                }
+            }
 
             ImGui::End();
         }
@@ -284,6 +337,10 @@ int main(int, char**, bool* p_open)
     ::UnregisterClass(wc.lpszClassName, wc.hInstance);
 
     return 0;
+}
+
+std::vector<char*> getConfigList() {
+    return funcFilesTypeInFolder("./", ".json");
 }
 
 
